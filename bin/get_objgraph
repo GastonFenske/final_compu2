@@ -1,4 +1,0 @@
-#!/Volumes/Samsung_T5/pruebas/iqoption/bin/python3
-# EASY-INSTALL-SCRIPT: 'dill==0.3.5.1','get_objgraph'
-__requires__ = 'dill==0.3.5.1'
-__import__('pkg_resources').run_script('dill==0.3.5.1', 'get_objgraph')
