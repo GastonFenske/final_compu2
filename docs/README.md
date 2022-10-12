@@ -10,7 +10,7 @@ La aplicacion al analizar un mercado solicita informacion en tiempo real de las 
 
 Cuando se realiza una operacion la misma y su resultado se guardan en la base de datos
 
-La aplicacion cuenta con el uso de sockert para la api, el uso de celery o multiprocessing para analizar los mercados, docker y alguna tecnologia para el front y trataremos de desplegarlo para que la aplicacion pueda estar activa 24/7
+La aplicacion cuenta con el uso de sockets para la api, el uso de celery o multiprocessing para analizar los mercados, docker y alguna tecnologia para el front y trataremos de desplegarlo para que la aplicacion pueda estar activa 24/7
 
 # Front:
 
