@@ -1,0 +1,14 @@
+
+[colors]
+colorama<0.5.0,>=0.4.3
+
+[pipfile_deprecated_finder]
+pipreqs
+requirementslib
+
+[plugins]
+setuptools
+
+[requirements_deprecated_finder]
+pip-api
+pipreqs
