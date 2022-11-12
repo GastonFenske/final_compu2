@@ -1,2 +1,5 @@
-env.py
-__pycache__/
+lib
+include
+bin
+**/__pycache__/
+share
