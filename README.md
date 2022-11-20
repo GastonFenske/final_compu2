@@ -1,6 +1,6 @@
 # FINAL
 
-![archcompu2.png](FINAL%20c529cb82acb3484cbef94c920f787d70/archcompu2.png)
+![archcompu2.png](static/archcompu2.png)
 
 La aplicacion se basa en un servidor concurrente asincronico que recibe datos de la api de IQ_OPTION, analiza los datos y segun diferentes parametros que el usuario establece compra a la baja o a la alza. Los datos de las operaciones se guardan en una base de datos MySQL.
 
