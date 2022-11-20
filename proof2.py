@@ -5,7 +5,7 @@ import datetime as dt
 from q import writing
 
 user = 's.fenske@alumno.um.edu.ar'
-password = 'perrito2'
+password = ''
 
 Iq = IQ_Option(user, password)
 connect = Iq.connect()
