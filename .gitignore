@@ -4,3 +4,6 @@ bin
 **/__pycache__/
 share
 .ipynb_checkpoints
+.env
+/env
+constants.py
