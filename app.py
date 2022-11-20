@@ -1,6 +1,7 @@
-from api import Connector, OpenMarkets
+from api.connector import Connector
 from constants import *
-from server import route, server, get_routes
+from server.server import server
+from server.router import route, get_fun_by_route, get_routes
 
 # connector = Connector(EMAIL, PASSWORD)
 # if connector.get_connect():
@@ -11,8 +12,7 @@ from server import route, server, get_routes
 # open_markets = OpenMarkets(connector)
 # print(open_markets.get_open_markets())
 
-route()
-print(get_routes)
+# print(get_routes)
 server()
 
 

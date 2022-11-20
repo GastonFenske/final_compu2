@@ -1,5 +1,6 @@
-# from api import Connector, OpenMarkets
-# from constants import *
+from api.connector import Connector
+from api.getOpenMarkets import OpenMarkets
+from constants import *
 
 get_routes: dict = {}
 post_routes: dict = {}
@@ -24,12 +25,29 @@ def set_routes(route_type: str):
 def get_fun_by_route(path):
     return get_routes[path]
 
-@route('/api/open_markets', 'GET')
+@route('/api/open-markets', 'GET')
 def get_open_markets():
-    return {'open_markets': 'some open markets'}
     # try:
     #     connector = Connector(EMAIL, PASSWORD)
     #     open_markets = OpenMarkets(connector)
-    #     return {'open_markets': open_markets}
-    # except Exception as e:
-    #     return {'error': e}
+    #     print(open_markets.get_open_markets())
+    # except:
+    #     pass
+    # return {'open_markets': 'some open markets'}
+    try:
+        connector = Connector(EMAIL, PASSWORD)
+        open_markets = OpenMarkets(connector)
+        return {'open_markets': open_markets.get_open_markets()}
+    except Exception as e:
+        return {'error': e}
+
+@route('/api/connect', 'POST')
+def connect():
+    try:
+        connector = Connector(EMAIL, PASSWORD)
+        if connector.get_connect():
+            return {'connect': True}
+        else:
+            return {'connect': False}
+    except Exception as e:
+        return {'error': e}

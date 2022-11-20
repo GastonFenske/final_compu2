@@ -1,5 +1,5 @@
 import asyncio, os, json, datetime
-from .router import route, get_fun_by_route
+from server.router import route, get_fun_by_route
 
 def parcear(dato):
     try:
@@ -136,6 +136,7 @@ async def main():
 
 
 def server():
+    route()
     asyncio.run(main())
 
 # if __name__ == '__main__':
