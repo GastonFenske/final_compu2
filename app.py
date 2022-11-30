@@ -1,6 +1,10 @@
+import sys
+sys.path.append('.')
+
 from api.connector import Connector
 from constants import *
-from server.server import server
+# from server.server import server
+from server import Server
 from server.router import route, get_fun_by_route, get_routes
 
 # connector = Connector(EMAIL, PASSWORD)
@@ -13,7 +17,9 @@ from server.router import route, get_fun_by_route, get_routes
 # print(open_markets.get_open_markets())
 
 # print(get_routes)
-server()
+
+server = Server(HOST, PORT)
+server.start()
 
 
 
