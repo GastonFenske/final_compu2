@@ -1,0 +1,3 @@
+celery
+PyMySQL
+python-dotenv
