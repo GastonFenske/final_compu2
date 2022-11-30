@@ -6,4 +6,4 @@ share
 .ipynb_checkpoints
 .env
 /env
-constants.py
+/constants.py
