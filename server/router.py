@@ -2,6 +2,7 @@ from api.connector import Connector
 from api.getOpenMarkets import OpenMarkets
 from constants import *
 import json
+# from app import connector
 
 get_routes: dict = {}
 post_routes: dict = {}
@@ -28,6 +29,10 @@ def get_fun_by_route(path, method='GET'):
     # return get_routes[path]
     return set_routes(method)[path]
 
+@route('/api/proof', 'GET')
+def get_proof():
+    return {'proof': 'some proof'}
+
 @route('/api/open-markets', 'GET')
 def get_open_markets():
     # try:
@@ -37,8 +42,11 @@ def get_open_markets():
     # except:
     #     pass
     # return {'open_markets': 'some open markets'}
-    try:
-        connector = Connector(EMAIL, PASSWORD)
+    try: 
+
+        # TODO: esto hay que desacploparlo no podemos estar conectandonos cada vez que necesitemos hacer algo
+        # connector = Connector(EMAIL, PASSWORD)
+        # connector = object()
         open_markets = OpenMarkets(connector)
         return {
             'open_markets': open_markets.get_open_markets()
@@ -46,9 +54,37 @@ def get_open_markets():
     except Exception as e:
         return {'error': e}
 
+@route('/api/home', 'GET')
+def get_home():
+    # open the home.html and return it
+    with open('home.html', 'rb') as f: # TODO: desacoplar esta funcion para renderizar html
+        return f.read()
+
+
+connector = None
+@route('/api/login', 'POST')
+def post_login(payload):
+    global connector
+    payload = json.loads(payload)
+    try:
+        connector = Connector(payload['email'], payload['password'])
+        return {
+            'status': 'ok',
+            'message': f'Welcome {payload["email"]}'
+        }
+    except Exception as e:
+        return {
+            'status': 'error',
+            'error': e
+        }
+
+
 @route('/api/connect', 'POST')
 def connect(body):
     print(body, 'body en connect')
+    email = json.loads(body)['email']
+    print(email, 'email')
+    # print(body['email'], 'email en connect')
     return {
         'connect': json.loads(body)
     }

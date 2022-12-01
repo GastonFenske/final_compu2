@@ -38,9 +38,15 @@ class Server:
             print('Entro al GET')
             try:
                 fun = get_fun_by_route(request.path)
-                data = fun()
+                data = fun() # lo que devuelve el metodo en este caso devia ser el html
                 print(data)
-                body = json.dumps(data).encode()
+
+
+                try:
+                    body = json.dumps(data).encode()
+                except:
+                    body = data
+                
                 respuesta = '200 OK'
                 header = bytearray(
                     "HTTP/1.1 " + respuesta + "\r\nContent-type:" + 'text/html'
