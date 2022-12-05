@@ -47,10 +47,15 @@ def get_open_markets():
         # TODO: esto hay que desacploparlo no podemos estar conectandonos cada vez que necesitemos hacer algo
         # connector = Connector(EMAIL, PASSWORD)
         # connector = object()
-        open_markets = OpenMarkets(connector)
-        return {
-            'open_markets': open_markets.get_open_markets()
-        }
+        if connector != None:
+            open_markets = OpenMarkets(connector)
+            return {
+                'open_markets': open_markets.get_open_markets()
+            }
+        else:
+            return {
+                'error': 'Please connect to IQ'
+            }
     except Exception as e:
         return {'error': e}
 
@@ -59,7 +64,6 @@ def get_home():
     # open the home.html and return it
     with open('home.html', 'rb') as f: # TODO: desacoplar esta funcion para renderizar html
         return f.read()
-
 
 connector = None
 @route('/api/login', 'POST')
@@ -77,7 +81,6 @@ def post_login(payload):
             'status': 'error',
             'error': e
         }
-
 
 @route('/api/connect', 'POST')
 def connect(body):

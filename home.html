@@ -1,530 +1,68 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercados</title>
+</head>
+<body>
 
-    <!-- Bootstrap CSS -->
-    <!-- <link href="open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet"> -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="https://raw.githubusercontent.com/GastonFenske/programacion1/master/maquetas/styles.css" crossorigin="anonymous" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"> -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;500;600&display=swap" rel="stylesheet">
+    <h1>Mercados que se pueden analizar</h1>
+    <h2>Click para anlizar el siguiente mercado</h2>
 
-    <title>Admin logueado</title>
-  </head>
-
-  <body class="bg-dark">
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
-      <div class="container pt-2 pb-2">
-        <a class="navbar-brand" href="#">Bolsones Store</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
-            <li class="nav-item">
-              <a class="nav-link active me-3 link-designated" href="#">Ver bolsones</a>
-            </li>
-            <li class="nav-item">
-              <a class="btn btn-primary py-2 px-4" href="#" tabindex="-1" aria-disabled="true">Logout</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-      <div class="container">
-
-        <div class="row">
-          <div class="col-md-2 col-sm-1 col-xs-0"></div>
-          <div class="col-md-6 col-sm-7 col-9 d-grid">
-            <div class="btn-estatico bg-warning mt-3">Bienvenido usuario@gmail.com</div>
-          </div>
-          <div class="col-md-2 col-sm-3 col-3 d-grid">
-            <div class="btn-estatico bg-danger mt-3">admin</div>
-          </div>
-          <div class="col-md-2 col-sm-1 col-xs-0"></div>
-        </div>
-
-        <div class="row mt-4 mb-4">
-
-
-                <div class="col-md-6 mt-3">
-                    <div class="d-grid">
-                    <!-- <button class="btn btn-secondary" type="button">Agregar proveedor</button> -->
-                    <a href="#">
-                            <div class="btn-own p-3 bg-secondary d-flex justify-content-between">
-                                <div class="d-flex justify-content-start align-items-center">
-                                    <div>
-                                        <i class="fas fa-user-plus fs-3"></i>
-                                    </div>
-                                    <div>
-                                        <p class="mb-0 ms-2">Agregar proveedor</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <i class="fas fa-arrow-circle-right fs-2"></i>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-
-          <div class="col-md-6 mt-3">
-            <div class="d-grid">
-              <!-- <button class="btn btn-secondary" type="button">Agregar proveedor</button> -->
-                <a href="#">
-                    <div class="btn-own p-3 bg-secondary d-flex justify-content-between">
-                        <div class="d-flex justify-content-start align-items-center">
-                            <div>
-                                <i class="fas fa-shopping-bag fs-3"></i>
-                            </div>
-                            <div>
-                                <p class="mb-0 ms-2">Consultar bolsones venta</p>
-                            </div>
-                        </div>
-                        <div>
-                            <i class="fas fa-arrow-circle-right fs-2"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-          </div>
-
-          <div class="col-md-6 mt-3">
-            <div class="d-grid">
-              <!-- <button class="btn btn-secondary" type="button">Agregar proveedor</button> -->
-                <a href="#">
-                    <div class="btn-own p-3 bg-secondary d-flex justify-content-between">
-                        <div class="d-flex justify-content-start align-items-center">
-                            <div>
-                                <i class="fas fa-shopping-bag fs-3"></i>
-                            </div>
-                            <div>
-                                <p class="mb-0 ms-2">Agregar bolson</p>
-                            </div>
-                        </div>
-                        <div>
-                            <i class="fas fa-arrow-circle-right fs-2"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-          </div>
-
-          <div class="col-md-6 mt-3">
-            <div class="d-grid">
-              <!-- <button class="btn btn-secondary" type="button">Agregar proveedor</button> -->
-                <a href="#">
-                    <div class="btn-own p-3 bg-secondary d-flex justify-content-between">
-                        <div class="d-flex justify-content-start align-items-center">
-                            <div>
-                                <i class="fas fa-shopping-bag fs-3"></i>
-                            </div>
-                            <div>
-                                <p class="mb-0 ms-2">Consultar bolsones pendientes</p>
-                            </div>
-                        </div>
-                        <div>
-                            <i class="fas fa-arrow-circle-right fs-2"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-          </div>
-
-          <div class="col-md-6 mt-3">
-            <div class="d-grid">
-              <!-- <button class="btn btn-secondary" type="button">Agregar proveedor</button> -->
-                <a href="#">
-                    <div class="btn-own p-3 bg-secondary d-flex justify-content-between">
-                        <div class="d-flex justify-content-start align-items-center">
-                            <div>
-                                <i class="fas fa-shopping-bag fs-3"></i>
-                            </div>
-                            <div>
-                                <p class="mb-0 ms-2">Consultar bolsones previos</p>
-                            </div>
-                        </div>
-                        <div>
-                            <i class="fas fa-arrow-circle-right fs-2"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-          </div>
-
-          <div class="col-md-6 mt-3">
-            <div class="d-grid">
-              <!-- <button class="btn btn-secondary" type="button">Agregar proveedor</button> -->
-                <a href="#">
-                    <div class="btn-own p-3 bg-secondary d-flex justify-content-between">
-                        <div class="d-flex justify-content-start align-items-center">
-                            <div>
-                                <i class="fas fa-user-circle fs-3"></i>
-                            </div>
-                            <div>
-                                <p class="mb-0 ms-2">Editar perfil</p>
-                            </div>
-                        </div>
-                        <div>
-                            <i class="fas fa-arrow-circle-right fs-2"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-          </div>
-
-          <div class="col-md-6 mt-3">
-            <div class="d-grid">
-              <!-- <button class="btn btn-secondary" type="button">Agregar proveedor</button> -->
-                <a href="#">
-                    <div class="btn-own p-3 bg-secondary d-flex justify-content-between">
-                        <div class="d-flex justify-content-start align-items-center">
-                            <div>
-                                <i class="fab fa-envira fs-3"></i>
-                            </div>
-                            <div>
-                                <p class="mb-0 ms-2">Consultar productos</p>
-                            </div>
-                        </div>
-                        <div>
-                            <i class="fas fa-arrow-circle-right fs-2"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-          </div>
-
-          <div class="col-md-6 mt-3">
-            <div class="d-grid">
-              <!-- <button class="btn btn-secondary" type="button">Agregar proveedor</button> -->
-                <a href="#">
-                    <div class="btn-own p-3 bg-secondary d-flex justify-content-between">
-                        <div class="d-flex justify-content-start align-items-center">
-                            <div>
-                                <i class="fas fa-credit-card fs-3"></i>
-                            </div>
-                            <div>
-                                <p class="mb-0 ms-2">Consultar compras</p>
-                            </div>
-                        </div>
-                        <div>
-                            <i class="fas fa-arrow-circle-right fs-2"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-          </div>
-
-
-        </div>
+    <script>
         
 
-      </div>
+        // fetch api to http://127.0.0.1:1234/api/open-markets
+        fetch('http://127.0.0.1:1234/api/open-markets')
+        .then(response => response.json())
+        .then(data => {
+            // console.log(data);
+            // console.log(data.open_markets)
+            // map data.open_markets to html
+            data.open_markets.map((market) => {
+                console.log(market)
+                // create a new div
+                const div = document.createElement('div');
+                // create a new link
+                const link = document.createElement('a');
+                // set the link href
+                link.href = ''
+                // set the link text
+                link.innerText = market;
+                // append the link to the div
+                div.appendChild(link);
+                // append the div to the body
+                document.body.appendChild(div);
 
-    <!-- Optional JavaScript; choose one of the two! -->
+        })
+        })
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+        import io from 'socket.io-client'
 
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-    -->
+        const socket = io('http://localhost:8000')
 
-    <script src="https://kit.fontawesome.com/9789745169.js" crossorigin="anonymous"></script>
+        socket.on('message', (message) => {
+          console.log(message, 'message')
+        //   setMessages([...messages, message])
+        //   setMsj(message)
+        })
 
-  </body>
-</html>
+        // // connect to websocket 127.0.0.1 port 8000
+        // const socket = new WebSocket('wss://127.0.0.1:8000');
 
-<style>
+        // // listen for messages
+        // socket.addEventListener('message', function (event) {
+        //     console.log('Message from server ', event.data);
+        // });
+
+        // const socket = io()
+        // socket.on('ping', () => {
+        //     console.log('connected')
+        // })
+
+    </script>
     
-/* ============== INICIO COLORES ================== */
-:root{
-    --dark: #000000;
-    --primary: #0031DD;
-    --primaryHover: #012abd;
-    --secondary: #2E2E2E;
-    --secondaryHover: #252525;
-    --forms: #1C1C1C;
-    --warning: #ff9f32;
-    --warningHover: #f18f1e; 
-    --danger: #DC3838;
-    --provider: #1fb506;
-    --contrast: #ffffff;
-    --input: #1e2126;
-    --success: #2b8b34;
-}
-/* ============== FIN COLORES ================== */
-
-
-/* ============== INICIO GENERALES ================== */
-body{
-    font-family: 'Poppins', sans-serif;
-}
-a{
-    text-decoration: none;
-}
-label{
-    color: var(--contrast);
-}
-input, .input{
-    background-color: var(--input)!important;
-    border: none!important;
-    color: var(--contrast)!important;
-}
-
-/* input:checked{
-    background-color: var(--primary)!important;
-    width: 4em!important;
-    height: 2em!important;
-} */
-/* The switch - the box around the slider */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-  }
-  
-  /* Hide default HTML checkbox */
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  /* The slider */
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  
-  input:checked + .slider {
-    background-color: var(--primary);
-  }
-  
-  input:focus + .slider {
-    box-shadow: 0 0 1px var(--primary);
-  }
-  
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-  
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-  }
-  
-  .slider.round:before {
-    border-radius: 50%;
-  }
-h3 {
-    font-weight: 600;
-    color: var(--contrast);
-}
-h1, h2 {
-    font-weight: 100;
-    color: var(--contrast);
-}
-p{
-    color: var(--contrast);
-}
-footer{
-    width: 100%;
-}
-/* ============== FIN GENERALES ================== */
-
-.link-designated{
-    font-weight: 600!important;
-}
-.navbar-brand{
-    font-weight: 600;
-    font-size: 1.8em;
-}
-.rounded{
-    border-radius: 1em!important;
-}
-header{
-    background-image: url(img/fondo.jpg);
-    background-position: center;
-    background-size: cover;
-    height: 100vh!important;
-}
-header:before{
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.3);
-}
-.headerr{
-    background-image: url(img/fondo.jpg);
-    background-position: center;
-    background-size: cover;
-    height: 100vh!important;
-}
-.info{
-    position: relative;
-}
-.mt-5{
-    margin: 8rem!important;
-}
-/* ============== INICIO BOTONES ================== */
-.btn{
-    border-radius: 0.7em!important;
-}
-.btn-primary{
-    background-color: var(--primary)!important;
-}
-.btn-primary:hover{
-    background-color: var(--primaryHover)!important;
-}
-.btn-warning{
-    background-color: var(--warning)!important;
-}
-.btn-warning:hover{
-    background-color: var(--warningHover)!important;
-}
-.btn-own {
-    padding: 0.5em 1em;
-    border-radius: 1em;
-    text-align: center;
-    color: #fff;
-    transition: all .4s ease;
-}
-.btn-own:hover{
-    background-color: var(--secondaryHover)!important;
-}
-.btn-estatico{
-    padding: 0.5em 1em;
-    border-radius: 1em;
-    text-align: center;
-    color: #fff;
-    transition: all .4s ease;
-}
-.btn-contrast{
-    background-color: var(--contrast);
-    color: var(--primary);
-    transition: all .4s ease;
-}
-.btn-contrast:hover{
-    background-color: rgb(238, 238, 238);
-    color: var(--primary);
-}
-/* ============== FIN BOTONES ================== */
-
-/* ============== INICIO BACKGROUNDS ================== */
-.bg-warning{
-    background-color: var(--warning)!important;
-}
-.bg-danger{
-    background-color: var(--danger)!important;
-}
-.bg-secondary{
-    background-color: var(--secondary)!important;
-}
-.bg-dark{
-    background-color: var(--dark)!important;
-}
-.bg-primary{
-    background-color: var(--primary)!important;
-}
-.bg-provider{
-    background-color: var(--provider);
-}
-.bg-forms{
-    background-color: var(--forms)!important;
-    border: none;
-    color: var(--contrast)!important;
-}
-.bg-success{
-    background-color: var(--success);
-}
-.bg-success:hover{
-    background-color: #307c38!important;
-}
-.bg-danger:hover{
-    background-color: rgb(190, 38, 38)!important;
-}
-.bg-contrast{
-    background-color: var(--contrast)!important;
-    color: var(--forms)!important;
-}
-
-
-/* ============== FIN BACKGROUNDS ================== */
-
-.contrast{
-    color: var(--contrast);
-}
-
-.pag-back{
-    padding: 0.5em 1.5em;
-    border-radius: 1em 0 0 1em!important;
-}
-.pag-next{
-    padding: 0.5em 1.5em;
-    border-radius: 0 1em 1em 0!important;
-}
-.page-link{
-    padding: 0.5em 1em;
-}
-.tabla {
-    border-collapse: collapse!important;
-}
-th, td {
-    text-align: left;
-    padding: 8px
-}
-tr{
-    background-color: #696969;
-}
-tr:nth-child(even){
-    background-color: #3e3e3e;
-}
-th {
-    background-color: var(--forms);
-    color: white;
-}
-.d-flex{
-    padding: 0;
-}
-.img-bolson {
-    max-height: 12em!important;
-    border-radius: 2em;
-}
-.btn{
-    border: 0!important;
-}
-</style>
+</body>
+</html>
