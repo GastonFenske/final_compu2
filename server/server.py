@@ -29,18 +29,60 @@ class Server:
 
     async def echo_handle(self, reader, writer):
 
+        # how each new connection is handled
+        try:
+            addr = writer.get_extra_info('peername')
+            print(f'[NEW] Connection from {addr}')
+        except:
+            pass
+
+        # verify if data is recived from websocket or http
+
+        # try:
+        #     message = 'Mercados nuevos'
+        #     # wait 5 seconds
+        #     await asyncio.sleep(5)
+        #     # writer.write(message.encode())
+        #     # await writer.drain()
+        # except Exception as e:
+        #     print(e)
+
         data = await reader.read(10000)
+        # print(data, 'DATAAAAA')
         request, body = self.parcear(data)
+        print(request, 'REQUEEEEST')
         request = Request(request[0], request[1], request[2], body)
+
+        print(request.protocol, 'PROTOCOL')
+        if request.protocol == 'HTTP/1.1':
+            print('ES PROT HTTP')
+            pass
+        else:
+            print('ENTRA A SOCKETS')
+            try:
+                message = 'Mercados nuevos, estoy mandando desde el back en python al front en react, mediante sockets, con esto ya manda una operacion completa cuando lo necesite y despues se va a reflejar en el front automaticamente'
+                await asyncio.sleep(5)
+                writer.write(message.encode())
+                await writer.drain()
+            except Exception as e:
+                print(e)
+            return
+
 
         # TODO: desacoplar los helpers para los types de request como GET, POST, PUT, DELETE
         if request.method == 'GET':
             print('Entro al GET')
             try:
                 fun = get_fun_by_route(request.path)
-                data = fun()
+                data = fun() # lo que devuelve el metodo en este caso devia ser el html
                 print(data)
-                body = json.dumps(data).encode()
+
+
+                try:
+                    body = json.dumps(data).encode()
+                except:
+                    body = data
+                
                 respuesta = '200 OK'
                 header = bytearray(
                     "HTTP/1.1 " + respuesta + "\r\nContent-type:" + 'text/html'

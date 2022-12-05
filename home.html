@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercados</title>
+</head>
+<body>
+
+    <h1>Mercados que se pueden analizar</h1>
+    <h2>Click para anlizar el siguiente mercado</h2>
+
+    <script>
+        
+
+        // fetch api to http://127.0.0.1:1234/api/open-markets
+        fetch('http://127.0.0.1:1234/api/open-markets')
+        .then(response => response.json())
+        .then(data => {
+            // console.log(data);
+            // console.log(data.open_markets)
+            // map data.open_markets to html
+            data.open_markets.map((market) => {
+                console.log(market)
+                // create a new div
+                const div = document.createElement('div');
+                // create a new link
+                const link = document.createElement('a');
+                // set the link href
+                link.href = ''
+                // set the link text
+                link.innerText = market;
+                // append the link to the div
+                div.appendChild(link);
+                // append the div to the body
+                document.body.appendChild(div);
+
+        })
+        })
+
+        import io from 'socket.io-client'
+
+        const socket = io('http://localhost:8000')
+
+        socket.on('message', (message) => {
+          console.log(message, 'message')
+        //   setMessages([...messages, message])
+        //   setMsj(message)
+        })
+
+        // // connect to websocket 127.0.0.1 port 8000
+        // const socket = new WebSocket('wss://127.0.0.1:8000');
+
+        // // listen for messages
+        // socket.addEventListener('message', function (event) {
+        //     console.log('Message from server ', event.data);
+        // });
+
+        // const socket = io()
+        // socket.on('ping', () => {
+        //     console.log('connected')
+        // })
+
+    </script>
+    
+</body>
+</html>
