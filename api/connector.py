@@ -8,8 +8,8 @@ class Connector:
         self.api = IQ_Option(self.email, self.password)
         self.connect = self.api.connect()
 
-    # def get_connect(self) -> bool:
-    #     return self.connect
+    def get_connect(self) -> bool:
+        return self.connect
 
     def api(self):
         return IQ_Option(self.email, self.password)

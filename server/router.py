@@ -1,7 +1,9 @@
 from api.connector import Connector
 from api.getOpenMarkets import OpenMarkets
+from service.trader import Trader
 from constants import *
 import json
+import asyncio
 # from app import connector
 
 get_routes: dict = {}
@@ -51,6 +53,31 @@ def get_open_markets():
             open_markets = OpenMarkets(connector)
             return {
                 'open_markets': open_markets.get_open_markets()
+            }
+        else:
+            return {
+                'error': 'Please connect to IQ'
+            }
+    except Exception as e:
+        return {'error': e}
+
+@route('/api/trade', 'GET')
+def trade():
+
+    MONEY = 10
+    GOAL = 'EURUSD-OTC'
+    size = 60
+    maxditc = 1
+    expiration_mode = 4
+    try:
+        if connector != None:
+            trader = Trader(MONEY, GOAL, size, maxditc, expiration_mode)
+            print('Empezamos con el trade')
+            # trader.start_trade(connector)
+            asyncio.gather(trader.start_trade(connector))
+            # trader.start_trade(connector)
+            return {
+                'trade': 'trade started'
             }
         else:
             return {

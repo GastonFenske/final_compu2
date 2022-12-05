@@ -1,6 +1,8 @@
 from celery import Celery
+# import sys
+# sys.path.append('.')
 
-celery = Celery('main_app')
+celery = Celery('trader')
 
 celery.conf.update(
     broker_url = 'redis://localhost:6379/0',
