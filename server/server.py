@@ -1,4 +1,4 @@
-import asyncio, os, json, datetime
+import asyncio, os, json, datetime, signal
 from server.router import route, get_fun_by_route
 
 class Request:
@@ -145,10 +145,16 @@ class Server:
         async with server:                              
             await server.serve_forever()
 
+    def signalHandler_SIGINT(Signal_Number, Frame):
+        print('You pressed Ctrl+C!')
+        print('Closing server...')
         
     def start(self):
         route()
         asyncio.run(self.main())
+
+
+    signal.signal(signal.SIGINT, signalHandler_SIGINT)
 
     
 # def parcear(self, dato):
