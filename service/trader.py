@@ -32,18 +32,26 @@ class Trader:
         self.size = size
         self.maxditc = maxditc
         self.expiration_mode = expiration_mode
+        self.light = True
 
 
     # @staticmethod
     async def start_trade(self, connector):
 
-        # TODO: esto me sirve para probar que cuando termina la tarea se libera el hilo, pero hasta que la tarea no termina no se pueden escuchar mas peticiones, y en este caso la terea de analizar el mercado es practicamente indefinida
-        for i in range(3):
-            print(hola.delay())
-            t.sleep(5)
-        return
+        print(self.light, 'light en el start trade')
 
-        while True:
+        # self.light = True
+
+        # TODO: esto me sirve para probar que cuando termina la tarea se libera el hilo, pero hasta que la tarea no termina no se pueden escuchar mas peticiones, y en este caso la terea de analizar el mercado es practicamente indefinida
+        # for i in range(3):
+        #     print(hola.delay())
+        #     t.sleep(5)
+        # return
+
+        while self.light:
+
+            print(self.light, 'light en el while')
+
             candles = Candles(connector)
 
             # print('Traemos las velas')
@@ -87,7 +95,13 @@ class Trader:
             # else:
             #     print('hold')
 
-            t.sleep(0.5)
+            # t.sleep(0.5)
+            await asyncio.sleep(0.5)
+
+    async def stop_trade(self):
+        # await asyncio.sleep(0.5)
+        print('Entra aca')
+        self.light = False
 
     
 # Trader.start_trade(None)

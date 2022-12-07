@@ -51,8 +51,10 @@ def get_open_markets():
         # connector = object()
         if connector != None:
             open_markets = OpenMarkets(connector)
+            # open_markets = asyncio.gather(open_markets.get_open_markets())
+            open_markets = open_markets.get_open_markets()
             return {
-                'open_markets': open_markets.get_open_markets()
+                'open_markets': open_markets
             }
         else:
             return {
@@ -61,24 +63,46 @@ def get_open_markets():
     except Exception as e:
         return {'error': e}
 
-@route('/api/trade', 'GET')
-def trade():
+semaphore = False
+@route('/api/trade', 'POST')
+def trade(body):
+
+    global semaphore
+
+    # create a switch case for every new request
+    if not semaphore:
+        semaphore = True
+    else:
+        semaphore = False
+
+
+    body = json.loads(body)
 
     MONEY = 10
-    GOAL = 'EURUSD-OTC'
+    GOAL = body['market']
     size = 60
     maxditc = 1
     expiration_mode = 4
+
+    print(GOAL, 'este es el mercado que llega')
+
     try:
         if connector != None:
             trader = Trader(MONEY, GOAL, size, maxditc, expiration_mode)
-            print('Empezamos con el trade')
-            # trader.start_trade(connector)
-            asyncio.gather(trader.start_trade(connector))
-            # trader.start_trade(connector)
-            return {
-                'trade': 'trade started'
-            }
+            if semaphore:
+                print('Empezamos con el trade')
+                # trader.start_trade(connector)
+                asyncio.gather(trader.start_trade(connector))
+                # trader.start_trade(connector)
+                return {
+                    'trade': 'trade started'
+                }
+            else:
+                print('Paramos el trade')
+                asyncio.gather(trader.stop_trade())
+                return {
+                    'trade': 'trade stopped'
+                }
         else:
             return {
                 'error': 'Please connect to IQ'
@@ -126,3 +150,4 @@ def connect(body):
     #         return {'connect': False}
     # except Exception as e:
     #     return {'error': e}
+
