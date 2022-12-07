@@ -96,6 +96,7 @@ connector = None
 @route('/api/login', 'POST')
 def post_login(payload):
     global connector
+    # print(payload, 'payload en login')
     payload = json.loads(payload)
     try:
         connector = Connector(payload['email'], payload['password'])
@@ -126,3 +127,21 @@ def connect(body):
     #         return {'connect': False}
     # except Exception as e:
     #     return {'error': e}
+
+#login route
+@route('/login', 'GET')
+def login():
+    with open('login.html', 'rb') as f: # TODO: desacoplar esta funcion para renderizar html
+        data = f.read()
+    print(data,"ESTE ES EL DATA")
+    email = data['email']
+    password = data['password']
+    if email != '' and password != '':
+        return {
+            'email': email,
+            'password': password
+        }
+    else:
+        return {
+            'error': 'Please fill all the fields'
+        }
