@@ -73,7 +73,8 @@ def analize_last_candles(candles):
                 # print('Entro al put')
                 return 'put'
             else:
-                return 'hold'
+                print('Entra al hold2')
+                return 'hold2'
 
         return 'hold'
 
