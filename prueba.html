@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercados</title>
+</head>
+<body>
+
+    <h1>Mercados que se pueden analizar</h1>
+    <h2>Click para anlizar el siguiente mercado</h2>
+
+    <script>
+        
+
+    fetch('http://127.0.0.1:1234/api/open-markets'
+        
+    )
+        .then(function(response) {
+            // read the hearers response
+            console.log(response.headers.get('Content-Type'));
+
+        return response.text();
+        })
+        .then(function(text) {
+        console.log('Request successful', text);
+        })
+        .catch(function(error) {
+        console.log('Request failed', error)
+        });
+
+
+
+    </script>
+    
+</body>
+</html>

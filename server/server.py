@@ -1,5 +1,6 @@
 import asyncio, os, json, datetime
 from server.router import route, get_fun_by_route
+from asyncio import sslproto, transports
 
 class Request:
 
@@ -84,10 +85,16 @@ class Server:
                     body = data
                 
                 respuesta = '200 OK'
+                # header = bytearray(
+                #     "HTTP/1.1 " + respuesta + "\r\nContent-type:" + 'text/html'
+                #     + "\r\nContent-length:" + str(len(body)) + "\r\n\r\n", 'utf8'
+                # )
+
                 header = bytearray(
                     "HTTP/1.1 " + respuesta + "\r\nContent-type:" + 'text/html'
-                    + "\r\nContent-length:" + str(len(body)) + "\r\n\r\n", 'utf8'
+                    + "\r\nContent-length:" + str(len(body)) + "\r\nAccess-Control-Allow-Origin: *" + "\r\n\r\n", 'utf8'
                 )
+
                 writer.write(header)        #Enviamos la cabecera
                 writer.write(body)          #Enviamos el body
                 await writer.drain()        #Esperamos que todo se haya enviado
@@ -100,10 +107,16 @@ class Server:
                     'path': str(request.path)
                 }).encode()
                 respuesta = '404 Not Found'
+                # header = bytearray(
+                #     "HTTP/1.1 " + respuesta + "\r\nContent-type:" + 'text/html'
+                #     + "\r\nContent-length:" + str(len(body)) + "\r\n\r\n", 'utf8'
+                # )
+
                 header = bytearray(
                     "HTTP/1.1 " + respuesta + "\r\nContent-type:" + 'text/html'
-                    + "\r\nContent-length:" + str(len(body)) + "\r\n\r\n", 'utf8'
+                    + "\r\nContent-length:" + str(len(body)) + "\r\nAccess-Control-Allow-Origin: *" + "\r\n\r\n", 'utf8'
                 )
+
                 writer.write(header)        #Enviamos la cabecera
                 writer.write(body)          #Enviamos el body
                 await writer.drain()        #Esperamos que todo se haya enviado
@@ -123,16 +136,36 @@ class Server:
             body = json.dumps(data).encode()
             print(body, 'el body convertido a json')
             respuesta = '201 OK'
+            # header = bytearray(
+            #     "HTTP/1.1 " + respuesta + "\r\nContent-type:" + 'text/html'
+            #     + "\r\nContent-length:" + str(len(body)) + "\r\n\r\n", 'utf8'
+            # )
+
+            # create a header with Access-Control-Allow-Origin: * and allow cors
             header = bytearray(
                 "HTTP/1.1 " + respuesta + "\r\nContent-type:" + 'text/html'
-                + "\r\nContent-length:" + str(len(body)) + "\r\n\r\n", 'utf8'
+                + "\r\nContent-length:" + str(len(body)) + "\r\nAccess-Control-Allow-Origin: *" + "\r\n\r\n", 'utf8'
             )
+
             writer.write(header)        #Enviamos la cabecera
             writer.write(body)          #Enviamos el body
             await writer.drain()        #Esperamos que todo se haya enviado
             writer.close()
 
     async def main(self):
+
+        # create the ssl context with no cors or allow origin
+        # ssl_context = sslproto.
+
+        # # create the asyncio server with the handle function, and no-cors headers
+        # server = await asyncio.start_server(
+        #     self.echo_handle,
+        #     self.host,
+        #     self.port,
+        #     ssl=ssl_context
+        # )
+
+        # ========
         server = await asyncio.start_server(              
             self.echo_handle,
             self.host,

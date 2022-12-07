@@ -14,6 +14,7 @@ import time as t
 from datetime import datetime
 import asyncio
 from utils.singleton import SingletonPattern
+from celery.result import AsyncResult
 # from api.connector import Connector
 
 # MONEY = 10
@@ -55,7 +56,7 @@ class Trader:
         # print(self.semaphore, 'light en el start trade')
         # return
 
-        # self.light = True
+        self.light = True
 
         # TODO: esto me sirve para probar que cuando termina la tarea se libera el hilo, pero hasta que la tarea no termina no se pueden escuchar mas peticiones, y en este caso la terea de analizar el mercado es practicamente indefinida
         # for i in range(3):
@@ -65,7 +66,7 @@ class Trader:
 
         while self.light:
 
-            print(self.light, 'light en el while')
+            # print(self.light, 'light en el while')
 
             candles = Candles(connector)
 
@@ -79,6 +80,9 @@ class Trader:
             # print('Llego el signal')
             # print(signal)
             # t.sleep(10)
+
+            signal = AsyncResult(signal.id).get()
+            print(signal, 'signal')
 
             if signal == 'call':
                 check, id = connector.api.buy(self.money, self.goal, 'call', self.expiration_mode)
@@ -106,6 +110,9 @@ class Trader:
                     #     file.write(f'PUT option placed, result: {result}\n')
                 else:
                     print('PUT option failed')
+            
+            elif signal == 'hold2':
+                print('Se abrio una nueva vela maquinola')
 
             # else:
             #     print('hold')
