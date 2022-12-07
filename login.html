@@ -7,13 +7,64 @@
     <title>Login</title>
 </head>
 <body>
-    <div class="login">
-        <h1>Login</h1>
-        <form method="POST" action="/login">
-            <input type="email" name="email" placeholder="Email" required="required" />
-            <input type="password" name="password" placeholder="Password" required="required" />
-            <button type="submit" class="btn btn-success btn-block btn-large" href="">Login</button>
-        </form>
-    </div>
+
+    <SCRIPT  language=JavaScript> 
+
+        //create a new label
+        const label_email = document.createElement('label');
+        // set the label text
+        label_email.innerText = 'Email';
+        // append the label to the body
+        document.body.appendChild(label_email);
+        // create a new input
+        const input_email = document.createElement('input');
+        // set the input type
+        input_email.type = 'email';
+        // set the input name
+        input_email.name = 'email';
+        // append the input to the body
+        document.body.appendChild(input_email);
+
+        //create a new label
+        const label_password = document.createElement('label');
+        // set the label text
+        label_password.innerText = 'Password';
+        // append the label to the body
+        document.body.appendChild(label_password);
+        // create a new input
+        const input_password = document.createElement('input');
+        // set the input type
+        input_password.type = 'password';
+        // set the input name
+        input_password.name = 'password';
+        // append the input to the body
+        document.body.appendChild(input_password);
+
+        // create a new button
+        const input_submit = document.createElement('input');
+        // set the input type
+        input_submit.type = 'submit';
+        // set the input name
+        input_submit.name = 'submit';
+        // append the input to the body
+        document.body.appendChild(input_submit);
+
+        const onTouch = (e) => {
+            console.log(e.target.innerText)
+            // fetch post api with body
+            fetch('http://127.0.0.1:1234/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: e.target.email,
+                    password: e.target.password
+                })
+            })
+        }
+
+    </SCRIPT>
+
 </body>
 </html>

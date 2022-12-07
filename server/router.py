@@ -152,23 +152,24 @@ def connect(body):
     # except Exception as e:
     #     return {'error': e}
 
-<<<<<<< HEAD
 #login route
 @route('/login', 'GET')
 def login():
     with open('login.html', 'rb') as f: # TODO: desacoplar esta funcion para renderizar html
-        data = f.read()
-    print(data,"ESTE ES EL DATA")
-    email = data['email']
-    password = data['password']
+        data = f.read().decode('ascii')
+    print(data, "ESTE ES EL DATA")
+    
+
+
+
+    email = ''
+    password = ''
     if email != '' and password != '':
+        connector = Connector(email, password)
         return {
-            'email': email,
-            'password': password
+            'email': email
         }
     else:
         return {
             'error': 'Please fill all the fields'
         }
-=======
->>>>>>> 56401d8dae23b288da843ce7cb9fd8234fa733ed
