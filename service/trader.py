@@ -13,6 +13,7 @@ from api.getCandles import Candles
 import time as t
 from datetime import datetime
 import asyncio
+from utils.singleton import SingletonPattern
 # from api.connector import Connector
 
 # MONEY = 10
@@ -21,7 +22,10 @@ import asyncio
 # maxditc = 1
 # expiration_mode = 4
 
+singleton = SingletonPattern()
 
+
+@singleton.singleton
 class Trader:
 
     # global hola
@@ -36,9 +40,20 @@ class Trader:
 
 
     # @staticmethod
+    # semaphore = True
     async def start_trade(self, connector):
 
-        print(self.light, 'light en el start trade')
+        # global semaphore
+
+        # create a switch case for every new request
+        # if not self.semaphore:
+        #     self.semaphore = True
+        # else:
+        #     print('Lo cambio a false')
+        #     self.semaphore = False
+
+        # print(self.semaphore, 'light en el start trade')
+        # return
 
         # self.light = True
 
@@ -102,6 +117,7 @@ class Trader:
         # await asyncio.sleep(0.5)
         print('Entra aca')
         self.light = False
+        print(self.light, 'light en el stop trade')
 
     
 # Trader.start_trade(None)
