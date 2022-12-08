@@ -14,7 +14,7 @@ const io = new SocketIOServer(server, {
 
 const client = new net.Socket();
 client.connect(1234, '127.0.0.1', () => {
-    console.log('Connected');
+    console.log('Connected al back de python, es decir al sv asincronico');
     client.write('Hello, server! Love, Client.');
 });
 
@@ -28,14 +28,18 @@ client.connect(1234, '127.0.0.1', () => {
 // });
 
 const func = () => {
+
+    // TODO: en teoria se conecta nada mas con el back y se queda ahi, hasta que el front no se conecta no hace nada 
     io.on('connection', (socket) => {
-        console.log('New client connected');
+        console.log('New client connected, se conecto uno desde el front');
 
         client.on('data', (data) => {
-            console.log('Received: ' + data);
+            console.log('Received: ' + data + 'ahora se enviara esta data al front');
         
             // func()
-            socket.emit('message', data.toString());
+            // socket.emit('message', data.toString());
+            console.log('Emitido')
+            socket.emit('server:newVeil', data.toString());
         
         
         });
@@ -81,6 +85,6 @@ func();
 
 
 server.listen(8000, () => {
-    console.log('Listening on port 3000');
+    console.log('Listening on port 8000');
 });
 

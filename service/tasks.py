@@ -65,18 +65,33 @@ def analize_last_candles(candles):
             # candle_analyzing = current_candle
             light = True
 
+            data = {
+                'close': close,
+                'signal': ''
+            }
+
             if close < lower_band:
                 # print('Entro al call')
                 # TODO: podemos ver si cambia el id de la vela entonces perforo y cerro
-                return 'call'
+                data['signal'] = 'call'
+                return data
+                # return 'call'
             elif close > upper_band:
                 # print('Entro al put')
-                return 'put'
+                data['signal'] = 'put'
+                return data
+                # return 'put'
             else:
                 print('Entra al hold2')
-                return 'hold2'
+                data['signal'] = 'hold2'
+                return data
+                # return 'hold2', close
 
-        return 'hold'
+        # return 'hold'
+        return {
+            'close': '',
+            'signal': 'hold',
+        }
 
 
     close = df['Close'].iloc[-1]

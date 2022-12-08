@@ -1,2 +1,1 @@
-clear
-node adapter.js
+node adapter2.js

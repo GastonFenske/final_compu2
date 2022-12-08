@@ -15,6 +15,7 @@ from datetime import datetime
 import asyncio
 from utils.singleton import SingletonPattern
 from celery.result import AsyncResult
+import datetime
 # from api.connector import Connector
 
 # MONEY = 10
@@ -31,7 +32,7 @@ class Trader:
 
     # global hola
 
-    def __init__(self, money: float, goal: str, size: int, maxditc: int, expiration_mode: int):
+    def __init__(self, money: float = None, goal: str = None, size: int = None, maxditc: int = None, expiration_mode: int = None):
         self.money = money
         self.goal = goal
         self.size = size
@@ -76,12 +77,14 @@ class Trader:
             # print(candles)
             # t.sleep(10)
 
-            signal = analize_last_candles.delay(candles)
+            data = analize_last_candles.delay(candles)
             # print('Llego el signal')
             # print(signal)
             # t.sleep(10)
 
-            signal = AsyncResult(signal.id).get()
+            data = AsyncResult(data.id).get()
+            signal = data['signal']
+            close = data['close']
             print(signal, 'signal')
 
             if signal == 'call':
@@ -112,13 +115,27 @@ class Trader:
                     print('PUT option failed')
             
             elif signal == 'hold2':
-                print('Se abrio una nueva vela maquinola')
+                print(f'Se abrio una nueva vela maquinola y la anterior cerro en {close}')
+                try:
+                    print('y se envio por socket')
+                    # TODO: esta enviando la informacion mediante sockets al front
+                    await self.send_to_socket(self.writer, data)
+                except Exception as e:
+                    print(e, 'error en el send to socket')
+                    pass
 
             # else:
             #     print('hold')
 
             # t.sleep(0.5)
             await asyncio.sleep(0.5)
+
+    async def send_to_socket(self, writer, data):
+        print('Entra aca')
+        message = f'Se abrio una nueva vela maquinola y la anterior cerro en {data["close"]}'
+        writer.write(message.encode())
+        await writer.drain()
+        print('Se envio el hold')
 
     async def stop_trade(self):
         # await asyncio.sleep(0.5)

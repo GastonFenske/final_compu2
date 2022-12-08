@@ -88,7 +88,13 @@ def trade(body):
 
     try:
         if connector != None:
-            trader = Trader(MONEY, GOAL, size, maxditc, expiration_mode)
+            # trader = Trader(MONEY, GOAL, size, maxditc, expiration_mode)
+            trader = Trader()
+            trader.money = MONEY
+            trader.goal = GOAL
+            trader.size = size
+            trader.maxditc = maxditc
+            trader.expiration_mode = expiration_mode
             if semaphore:
                 print('Empezamos con el trade')
                 # trader.start_trade(connector)
