@@ -89,14 +89,35 @@ class Trader:
             close = data['close']
             print(signal, 'signal')
 
+
+            # await self.send_to_socket(self.writer, data)
+
             if signal == 'call':
+
                 check, id = connector.api.buy(self.money, self.goal, 'call', self.expiration_mode)
                 print('call', datetime.datetime.now())
+
                 if check:
+                    await self.send_to_socket(self.writer, data)
                     print('CALL option placed')
                     result, amount = connector.api.check_win_v4(id)
+
+                    win = 0
+                    if result != 'loose':
+                        win = 1
+
+                    datos = {
+                        'date': f'{datetime.datetime.now()}',
+                        'market': f'{self.goal}',
+                        'result': win,
+                        'ammount_use': self.money,
+                        'profit': amount,
+                        'duration_in_sec': self.expiration_mode
+                    }
+                    self.repository.insert('operations', datos)
+
                     print(result)
-                    writing.delay('call', result, amount)
+                    # writing.delay('call', result, amount)
                     # with open('operations.csv', 'a') as file:
                     #     file.write(f'PUT option placed, result: {result}\n')
                 else:
@@ -106,30 +127,55 @@ class Trader:
                 print('put', datetime.datetime.now())
                 check, id = connector.api.buy(self.money, self.goal, 'put', self.expiration_mode)
 
+
                 if check:
+                    await self.send_to_socket(self.writer, data)
                     print('PUT option placed')
                     result, amount = connector.api.check_win_v4(id)
+
+                    win = 0
+                    if result != 'loose':
+                        win = 1
+
+                    datos = {
+                        'date': f'{datetime.datetime.now()}',
+                        'market': f'{self.goal}',
+                        'result': win,
+                        'ammount_use': self.money,
+                        'profit': amount,
+                        'duration_in_sec': self.expiration_mode
+                    }
+                    self.repository.insert('operations', datos)
+
                     print(result)
-                    writing.delay('put', result, amount)
+                    # writing.delay('put', result, amount)
                     # with open('operations.csv', 'a') as file:
                     #     file.write(f'PUT option placed, result: {result}\n')
                 else:
                     print('PUT option failed')
+
+            # elif signal == 'hold':
+
+            #     try:
+            #         await self.send_to_socket(self.writer, data)
+            #     except Exception as e:
+            #         print(e, 'error en el send to socket')
+            #         pass
             
-            elif signal == 'hold2':
+            elif signal == 'new_veil':
                 print(f'Se abrio una nueva vela maquinola y la anterior cerro en {close}')
                 try:
                     print('y se envio por socket')
                     # TODO: esta enviando la informacion mediante sockets al front
-                    datos = {
-                        'date': f'{datetime.datetime.now()}',
-                        'market': 'EURUSD',
-                        'result': 1,
-                        'ammount_use': 10.0,
-                        'profit': 9.0,
-                        'duration_in_sec': 60
-                    }
-                    self.repository.insert('operations', datos)
+                    # datos = {
+                    #     'date': f'{datetime.datetime.now()}',
+                    #     'market': 'EURUSD',
+                    #     'result': 1,
+                    #     'ammount_use': 10.0,
+                    #     'profit': 9.0,
+                    #     'duration_in_sec': 60
+                    # }
+                    # self.repository.insert('operations', datos)
 
                     await self.send_to_socket(self.writer, data)
                 except Exception as e:
@@ -144,7 +190,11 @@ class Trader:
 
     async def send_to_socket(self, writer, data):
         print('Entra aca')
-        message = f'Se abrio una nueva vela maquinola y la anterior cerro en {data["close"]}'
+        # message = f'Se abrio una nueva vela maquinola y la anterior cerro en {data["close"]}'
+        if data["close"] != '':
+            message = f'{datetime.datetime.now()} {data["message"]}. La vela cerro en: {data["close"]}'
+        else:
+            message = f'{datetime.datetime.now()} {data["message"]}'
         writer.write(message.encode())
         await writer.drain()
         print('Se envio el hold')

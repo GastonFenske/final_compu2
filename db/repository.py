@@ -48,9 +48,9 @@ class Repository:
         cursor.execute(query)
 
         data = cursor.fetchall()
-        print(data, 'DATA DEL REPOSITORY')
+        # print(data, 'DATA DEL REPOSITORY')
         operations = []
-        print(len(data), 'LEN DATA')
+        # print(len(data), 'LEN DATA')
 
         for i in range (len(data)):
             print('Entra al for')
@@ -72,9 +72,9 @@ class Repository:
                 'profit': profit,
                 'duration_in_sec': duration_in_sec
             }
-            print(operation, 'OPERATION')
+            # print(operation, 'OPERATION')
             operations.append(operation)
-            print(operations, 'OPERATIONS')
+            # print(operations, 'OPERATIONS')
 
         return operations
 

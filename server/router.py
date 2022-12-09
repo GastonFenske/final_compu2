@@ -83,7 +83,7 @@ def trade(body):
     GOAL = body['market']
     size = 60
     maxditc = 1
-    expiration_mode = 4
+    expiration_mode = 1
 
     print(GOAL, 'este es el mercado que llega')
 
