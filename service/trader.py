@@ -15,6 +15,7 @@ from datetime import datetime
 import asyncio
 from utils.singleton import SingletonPattern
 from celery.result import AsyncResult
+from db.repository import Repository
 import datetime
 # from api.connector import Connector
 
@@ -39,6 +40,7 @@ class Trader:
         self.maxditc = maxditc
         self.expiration_mode = expiration_mode
         self.light = True
+        self.repository = Repository()
 
 
     # @staticmethod
@@ -119,6 +121,16 @@ class Trader:
                 try:
                     print('y se envio por socket')
                     # TODO: esta enviando la informacion mediante sockets al front
+                    datos = {
+                        'date': f'{datetime.datetime.now()}',
+                        'market': 'EURUSD',
+                        'result': 1,
+                        'ammount_use': 10.0,
+                        'profit': 9.0,
+                        'duration_in_sec': 60
+                    }
+                    self.repository.insert('operations', datos)
+
                     await self.send_to_socket(self.writer, data)
                 except Exception as e:
                     print(e, 'error en el send to socket')

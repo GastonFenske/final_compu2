@@ -5,6 +5,7 @@ from constants import *
 import json
 import asyncio
 # from app import connector
+from db.repository import Repository
 
 get_routes: dict = {}
 post_routes: dict = {}
@@ -157,3 +158,11 @@ def connect(body):
     # except Exception as e:
     #     return {'error': e}
 
+@route('/api/operations', "GET")
+def get_operations():
+    repository = Repository()
+    operations = repository.select('operations', '*')
+    print(operations, 'operations desde el GET')
+    return {
+        'operations': operations
+    }

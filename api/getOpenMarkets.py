@@ -11,6 +11,7 @@ class OpenMarkets:
         all_open_markets = self.connector.api.get_all_open_time()
         binary = all_open_markets['binary']
         open_markets = []
+        open_markets_images = []
         for x in binary:
             if binary[x]['open']:
                 open_markets.append(x)

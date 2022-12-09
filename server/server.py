@@ -86,7 +86,7 @@ class Server:
             try:
                 fun = get_fun_by_route(request.path)
                 data = fun() # lo que devuelve el metodo en este caso devia ser el html
-                print(data)
+                print(data, 'ESTO LO IMPREME DESDE EL GET DEL SERVEr')
 
 
                 try:
