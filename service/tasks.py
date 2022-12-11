@@ -32,6 +32,7 @@ def analize_last_candles(candles):
     # candles = Iq.get_candles(GOAL, size, 100, time.time())
     import pandas as pd
     df = pd.DataFrame(candles)
+    # print(df['id'].iloc[-1], 'LAAAAST CANDLE')
     df.to_csv('candles.csv', index=False)
     df = pd.read_csv('candles.csv')
     df['Date'] = pd.to_datetime(df['from'], unit='s')
@@ -56,14 +57,18 @@ def analize_last_candles(candles):
     # df.dropna(inplace=True)
 
     def find_signal(close, lower_band, upper_band, current_candle, candle_analyzing):
+
         global light
 
+        # print(current_candle, 'Current candle')
+        # print(candle_analyzing, 'Candle analyzing')
         if current_candle != candle_analyzing:
             print('Se abrio una vela nueva')
             print('La vela cerró en: ', close)
             # print(current_candle, 'Current candle cuando cambia')
             # candle_analyzing = current_candle
             light = True
+            # print('se cambio la vela', light)
 
             data = {
                 'close': close,
@@ -107,6 +112,7 @@ def analize_last_candles(candles):
     if light:
         candle_analyzing = current_candle
         light = False
+        # print('se cambio la vela', light)
 
     signal = find_signal(close, lower_band, upper_band, current_candle, candle_analyzing=candle_analyzing)
 

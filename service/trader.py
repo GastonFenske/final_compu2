@@ -26,6 +26,7 @@ import datetime
 # expiration_mode = 4
 
 singleton = SingletonPattern()
+# repository = Repository()
 
 
 @singleton.singleton
@@ -75,6 +76,7 @@ class Trader:
 
             # print('Traemos las velas')
             candles = candles.get_candles(self.goal, self.size, self.maxditc, self.expiration_mode)
+            # print(candles[-1], 'LAST CANDLE EN EL TRADEEER')
             # print('Llegaron las velas al start trade')
             # print(candles)
             # t.sleep(10)
@@ -83,6 +85,13 @@ class Trader:
             # print('Llego el signal')
             # print(signal)
             # t.sleep(10)
+
+            # TODO: example de la data
+            # data = {
+            #     'close': close,
+            #     'signal': '',
+            #     'message': ''
+            # }
 
             data = AsyncResult(data.id).get()
             signal = data['signal']
@@ -112,9 +121,11 @@ class Trader:
                         'result': win,
                         'ammount_use': self.money,
                         'profit': amount,
-                        'duration_in_sec': self.expiration_mode
+                        'duration_in_min': self.expiration_mode,
+                        'type': 'call'
                     }
                     self.repository.insert('operations', datos)
+                    # repository.insert('operations', datos)
 
                     print(result)
                     # writing.delay('call', result, amount)
@@ -143,9 +154,11 @@ class Trader:
                         'result': win,
                         'ammount_use': self.money,
                         'profit': amount,
-                        'duration_in_sec': self.expiration_mode
+                        'duration_in_min': self.expiration_mode,
+                        'type': 'put'
                     }
                     self.repository.insert('operations', datos)
+                    # repository.insert('operations', datos)
 
                     print(result)
                     # writing.delay('put', result, amount)
@@ -173,7 +186,8 @@ class Trader:
                     #     'result': 1,
                     #     'ammount_use': 10.0,
                     #     'profit': 9.0,
-                    #     'duration_in_sec': 60
+                    #     'duration_in_min': 60,
+                    #     'type': 'put'
                     # }
                     # self.repository.insert('operations', datos)
 

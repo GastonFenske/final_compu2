@@ -61,8 +61,9 @@ class Repository:
             result = data[i][3]
             ammount_use = float(data[i][4])
             profit = float(data[i][5])
-            duration_in_sec = data[i][6]
-            # operation = Operation(id, date, market, result, ammount_use, profit, duration_in_sec)
+            duration_in_min = data[i][6]
+            operation_type = data[i][7]
+            # operation = Operation(id, date, market, result, ammount_use, profit, duration_in_min)
             operation = {
                 'id': id,
                 'date': date,
@@ -70,7 +71,8 @@ class Repository:
                 'result': result,
                 'ammount_use': ammount_use,
                 'profit': profit,
-                'duration_in_sec': duration_in_sec
+                'duration_in_min': duration_in_min,
+                'type': operation_type
             }
             # print(operation, 'OPERATION')
             operations.append(operation)

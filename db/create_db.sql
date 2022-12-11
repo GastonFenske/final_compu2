@@ -19,8 +19,9 @@ CREATE TABLE IF NOT EXISTS `tradingbot`.`operations` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `result` TINYINT(1) NOT NULL,
   `ammount_use` DECIMAL NOT NULL,
-  `profit` INT DECIMAL NOT NULL,
-  `duration_in_sec` INT NOT NULL,
+  `profit` DECIMAL NOT NULL,
+  `duration_in_min` INT NOT NULL,
+  `type` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 0
