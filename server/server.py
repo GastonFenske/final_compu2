@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 import asyncio, os, json, datetime, signal
+=======
+import asyncio, os, json, datetime, random, string
+>>>>>>> 6a47a6004e32de42ff0aa3c40e5ce3c02ab95940
 from server.router import route, get_fun_by_route
 from asyncio import sslproto, transports
+from service.trader import Trader
 
 class Request:
 
@@ -61,10 +66,19 @@ class Server:
         else:
             print('ENTRA A SOCKETS')
             try:
-                message = 'Mercados nuevos, estoy mandando desde el back en python al front en react, mediante sockets, con esto ya manda una operacion completa cuando lo necesite y despues se va a reflejar en el front automaticamente'
-                await asyncio.sleep(5)
-                writer.write(message.encode())
-                await writer.drain()
+
+                # message = 'Mercados nuevos, estoy mandando desde el back en python al front en react, mediante sockets, con esto ya manda una operacion completa cuando lo necesite y despues se va a reflejar en el front automaticamente'
+                try:
+                    trader = Trader()
+                    trader.writer = writer
+                    print(trader.writer, 'writer que se crea en el server al momento se conecta el socket')
+                except:
+                    pass
+                # for i in range(10):
+                #     message = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(12))
+                #     await asyncio.sleep(4)
+                #     writer.write(message.encode())
+                #     await writer.drain()
             except Exception as e:
                 print(e)
             return
@@ -76,7 +90,7 @@ class Server:
             try:
                 fun = get_fun_by_route(request.path)
                 data = fun() # lo que devuelve el metodo en este caso devia ser el html
-                print(data)
+                print(data, 'ESTO LO IMPREME DESDE EL GET DEL SERVEr')
 
 
                 try:
