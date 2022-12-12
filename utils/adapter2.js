@@ -34,15 +34,25 @@ const func = () => {
         console.log('New client connected, se conecto uno desde el front');
 
         client.on('data', (data) => {
+
+            // convert data to JSON
+            data = JSON.parse(data);
+            console.log(data.date, 'DATE')
+
             console.log('Received: ' + data + 'ahora se enviara esta data al front');
         
             // func()
             // socket.emit('message', data.toString());
             console.log('Emitido')
-            socket.emit('server:newVeil', data.toString());
+            // socket.emit('server:newVeil', data.toString());
+
+            // send in json fomat
+            socket.emit('server:newVeil', data);
         
         
         });
+
+
     
         // socket.emit('message', 'Que mande algo aunquesea no me importa la data');
         // console.log('Emitido');

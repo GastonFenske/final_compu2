@@ -1,4 +1,4 @@
-MONEY = 10
+# MONEY = 10
 # GOAL = 'EURUSD'
 size = 60
 maxditc = 1

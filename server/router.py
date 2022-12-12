@@ -100,26 +100,27 @@ def trade(body):
 
     body = json.loads(body)
 
-    MONEY = 10
-    GOAL = body['market']
+    # MONEY = 10
+    money = body['money']
+    goal = body['market']
     # GOAL = 'EURUSD-OTC'
     size = 60
     maxditc = 1
     expiration_mode = 4
 
-    print(GOAL, 'este es el mercado que llega')
+    # print(GOAL, 'este es el mercado que llega')
 
     try:
         if connector != None:
             # trader = Trader(MONEY, GOAL, size, maxditc, expiration_mode)
             trader = Trader()
-            trader.money = MONEY
-            trader.goal = GOAL
+            trader.money = money
+            trader.goal = goal
             trader.size = size
             trader.maxditc = maxditc
             trader.expiration_mode = expiration_mode
             if semaphore:
-                active_market.append(GOAL)
+                active_market.append(goal)
                 print('Empezamos con el trade')
                 # trader.start_trade(connector)
                 asyncio.gather(trader.start_trade(connector))
@@ -128,7 +129,7 @@ def trade(body):
                     'trade': 'trade started'
                 }
             else:
-                active_market.remove(GOAL)
+                active_market.remove(goal)
                 print('Paramos el trade')
                 asyncio.gather(trader.stop_trade())
                 return {
@@ -155,6 +156,16 @@ def post_login(payload):
     payload = json.loads(payload)
     try:
         connector = Connector(payload['email'], payload['password'])
+        if connector.get_connect():
+            return {
+                'status': 'ok',
+                'message': f'Welcome {payload["email"]}'
+            }
+        else:
+            return {
+                'status': 'error',
+                'error': 'Wrong credentials'
+            }
         return {
             'status': 'ok',
             'message': f'Welcome {payload["email"]}'

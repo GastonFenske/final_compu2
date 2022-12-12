@@ -1,4 +1,4 @@
-import sys
+import sys, json
 sys.path.append('.')
 
 from tasks import writing, analize_last_candles, hola
@@ -107,8 +107,19 @@ class Trader:
                 print('call', datetime.datetime.now())
 
                 if check:
-                    await self.send_to_socket(self.writer, data)
+                    await self.send_to_socket_new_veil(self.writer, data)
                     print('CALL option placed')
+
+                    operation_data = {
+                        'type': 'operation',
+                        'date': f'{datetime.datetime.now()}',
+                        'market': f'{self.goal}',
+                        'ammount_use': self.money,
+                        'duration_in_min': self.expiration_mode,
+                        'message': 'Call option placed',
+                    }
+                    await self.send_to_socket(self.writer, operation_data)
+
                     result, amount = connector.api.check_win_v4(id)
 
                     win = 0
@@ -125,6 +136,14 @@ class Trader:
                         'type': 'call'
                     }
                     self.repository.insert('operations', datos)
+
+                    # result_data = {
+                    #     'result': win,
+                    #     'type': 'call',
+                    #     'profit': amount,
+                    #     'date': f'{datetime.datetime.now()}'
+                    #     'market': f'{self.goal}
+                    # }
                     # repository.insert('operations', datos)
 
                     print(result)
@@ -140,7 +159,7 @@ class Trader:
 
 
                 if check:
-                    await self.send_to_socket(self.writer, data)
+                    await self.send_to_socket_new_veil(self.writer, data)
                     print('PUT option placed')
                     result, amount = connector.api.check_win_v4(id)
 
@@ -191,7 +210,20 @@ class Trader:
                     # }
                     # self.repository.insert('operations', datos)
 
-                    await self.send_to_socket(self.writer, data)
+                    operation_data = {
+                        'id': 'JD5454NHB434',
+                        'type': 'operation',  
+                        'date': f'{datetime.datetime.now()}',
+                        'market': f'{self.goal}',
+                        'ammount_use': self.money,
+                        'duration_in_min': self.expiration_mode,
+                        'message': 'Call option placed',
+                        'state': 'pending'
+                    }
+                    operation_data = json.dumps(operation_data)
+                    await self.send_to_socket(self.writer, operation_data)
+
+                    # await self.send_to_socket_new_veil(self.writer, data)
                 except Exception as e:
                     print(e, 'error en el send to socket')
                     pass
@@ -202,7 +234,7 @@ class Trader:
             # t.sleep(0.5)
             await asyncio.sleep(0.5)
 
-    async def send_to_socket(self, writer, data):
+    async def send_to_socket_new_veil(self, writer, data):
         print('Entra aca')
         # message = f'Se abrio una nueva vela maquinola y la anterior cerro en {data["close"]}'
         if data["close"] != '':
@@ -211,7 +243,11 @@ class Trader:
             message = f'{datetime.datetime.now()} {data["message"]}'
         writer.write(message.encode())
         await writer.drain()
-        print('Se envio el hold')
+        print('Se envio la nueva vela por socket')
+
+    async def send_to_socket(self, writer, data):
+        writer.write(str(data).encode())
+        await writer.drain()
 
     async def stop_trade(self):
         # await asyncio.sleep(0.5)
