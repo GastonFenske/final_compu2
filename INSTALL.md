@@ -4,19 +4,23 @@
 
 Tener instalado docker de no ser así siga los pasos a continuación
 
+- Abrir la terminal
+
 ```bash
 sudo apt update
 sudo apt install docker.io
 ```
+Verificar si se instaló correctamente
 
-```javascript
-console.log("Hola mundo")
+```bash 
+docker
 ```
-
-```ruby
-puts "Hola mundo"
+o tambien verificando la version
+```bash 
+docker --version
 ```
+luego de confirmar que tenemos docker en nuestra máquina ejecutar el contenedor docker del proyecto
 
-```python
-print("Hola mundo")
+```bash 
+docker run tradingbot
 ```
