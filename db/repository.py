@@ -17,8 +17,8 @@ class Repository:
             # passwd=config["password"],
             # host=config["host"],
             # database=config["database"]
-            user='root',
-            passwd='fenske12',
+            user='douglas',
+            passwd='douglas',
             host='localhost',
             database='tradingbot'
         )

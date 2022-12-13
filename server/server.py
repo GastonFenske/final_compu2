@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import asyncio, os, json, datetime, signal
-=======
-import asyncio, os, json, datetime, random, string
->>>>>>> 6a47a6004e32de42ff0aa3c40e5ce3c02ab95940
+import asyncio, json, datetime
 from server.router import route, get_fun_by_route
-from asyncio import sslproto, transports
 from service.trader import Trader
 
 class Request:

@@ -41,7 +41,7 @@ class Trader:
         self.maxditc = maxditc
         self.expiration_mode = expiration_mode
         self.light = True
-        self.repository = Repository()
+        # self.repository = Repository()
 
 
     # @staticmethod

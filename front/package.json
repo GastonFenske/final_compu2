@@ -16,7 +16,8 @@
     "react-router-dom": "6",
     "socket.io-client": "^4.5.3",
     "websocket": "^1.0.34",
-    "ws": "^8.11.0"
+    "ws": "^8.11.0",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@types/react": "^18.0.24",
