@@ -1,0 +1,162 @@
+/* #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+} */
+:root{
+  --dark: #000000;
+  --primary: #0031DD;
+  --primaryHover: #012abd;
+  --secondary: #2E2E2E;
+  --secondaryHover: #252525;
+  --forms: #1C1C1C;
+  --warning: #ff9f32;
+  --warningHover: #f18f1e; 
+  --danger: #DC3838;
+  --success: #1a70e0;
+  --contrast: #ffffff;
+  --input: #1e2126;
+  --success: #2b8b34;
+}
+.bg-pro {
+  background-color: #3e3e3e;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+.bg-dark-nav {
+  background-color: #131313;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.mt-6 {
+  margin-top: 6rem!important;
+}
+.my-6 {
+  margin-top: 6rem!important;
+  margin-bottom: 6rem!important;
+}
+.my-8 {
+  margin-top: 12rem!important;
+  margin-bottom: 12rem!important;
+}
+.btn-iq {
+  background-color: #ff5722;
+  color: #fff!important;
+}
+.alert-dark {
+  border-color: #ff5722!important;
+}
+.btn-success {
+  /* background-color: var(--success)!important; */
+  background-color: #13d543!important;
+  color: #fff!important;
+  border-color: #13d543;
+}
+.bg-forms{
+  background-color: var(--forms)!important;
+  border: none;
+  color: var(--contrast)!important;
+}
+.rounded{
+  border-radius: 1em!important;
+}
+input, .input{
+  background-color: var(--input)!important;
+  border: none!important;
+  color: var(--contrast)!important;
+}
+.text-iq {
+  color: #ff5722!important;
+}
+.spinner-border {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-width: 0.4em;
+  /* set in the middle of the screen */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* set the margin to negative half of the width and height */
+  margin-top: -2.25rem;
+  margin-left: -2.25rem;
+
+}
+/* .table-iq {
+  background: #ff5722!important;
+} */
+thead {
+  color: #ff5722!important;
+}
+.alert-dark {
+  background-color: var(--secondary)!important;
+  color: #fff!important;
+}
+.log-effect {
+  /* create typiyin effect */
+  /* animation: typing 3s steps(40, end), blink-caret .75s step-end infinite!important; */
+  animation: fade-in-out 1.2s infinite alternate!important;
+
+  /* create fade out and fade in effect each 1 sec */
+  /* animation: fade-in-out 1s ease-in-out infinite!important; */
+}
+
+@keyframes fade-in-out {
+
+  25% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+.text-log {
+  /* animation: typing 3s steps(40, end), blink-caret .75s step-end infinite!important; */
+  animation: fade-in-out 1.5s ease-in-out infinite alternate!important;
+}
+p {
+  margin: 0!important;
+}
+.card {
+  border: 1px solid #ffffff!important;
+}

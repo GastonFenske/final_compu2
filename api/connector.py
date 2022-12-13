@@ -9,4 +9,12 @@ class Connector:
         self.connect = self.api.connect()
 
     def get_connect(self) -> bool:
-        return self.connect
+        if self.connect[0]:
+            return True
+        return False
+
+    def api(self):
+        return IQ_Option(self.email, self.password)
+
+    def connect(self):
+        return self.api().connect()
