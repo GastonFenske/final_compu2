@@ -1,0 +1,20 @@
+version: "1.1"
+
+services:
+    tradingbot:
+        build: .
+        ports:
+            - "1234:1234"
+        links:
+            - tradingbot_db
+
+    tradingbot_db:
+        image: mysql:8
+        restart: always
+        ports: 
+            - "3306:3306"
+        environment: 
+            - MYSQL_PASSWORD=fenske12
+            - MYSQL_DATABASE=tradingbot
+            - MYSQL_USER=root
+            - MYSQL_ROOT_PASSWORD=fenske12
