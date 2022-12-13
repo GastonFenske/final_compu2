@@ -1,6 +1,7 @@
 import pymysql, json
 from utils.singleton import SingletonPattern
 from models.operation import Operation
+from constants import *
 
 singleton = SingletonPattern()
 
@@ -17,10 +18,10 @@ class Repository:
             # passwd=config["password"],
             # host=config["host"],
             # database=config["database"]
-            user='root',
-            passwd='fenske12',
-            host='localhost',
-            database='tradingbot'
+            user=DB_USER,
+            passwd=DB_PASSWORD,
+            host=DB_HOST,
+            database=DB_DATABASE
         )
 
     def insert(self, table: str, data: dict):
@@ -78,6 +79,7 @@ class Repository:
             operation_type = data[i][7]
             state = data[i][8]
             message = data[i][9]
+            # type_operation = data[i][10]
             # operation = Operation(id, date, market, result, ammount_use, profit, duration_in_min)
             operation = {
                 'id': id,
@@ -90,6 +92,7 @@ class Repository:
                 'type': operation_type,
                 'state': state,
                 'message': message
+                # 'type_operation': type_operation
             }
             # print(operation, 'OPERATION FROM REPOSITORY')
             # print(operation, 'OPERATION')
@@ -131,6 +134,7 @@ class Repository:
             operation_type = data[i][7]
             state = data[i][8]
             message = data[i][9]
+            # type_operation = data[i][10]
             # operation = Operation(id, date, market, result, ammount_use, profit, duration_in_min)
             operation = {
                 'id': id,
@@ -143,6 +147,7 @@ class Repository:
                 'type': operation_type,
                 'state': state,
                 'message': message
+                # 'type_operation': type_operation
             }
             print(operation, 'OPERATION PENDING FROM REPOSITORY')
             # print(operation, 'OPERATION')

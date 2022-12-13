@@ -109,25 +109,40 @@ class Trader:
 
                 if check:
 
-
-                    data = json.dumps(data)
-                    # await self.send_to_socket_new_veil(self.writer, data)
-                    await self.send_to_socket(self.writer, data)
-                    print('CALL option placed')
-
                     operation_data = {
-                        'id': id,
-                        'type': 'operation',
-                        'market': f'{self.goal}',
                         'date': f'{datetime.datetime.now()}',
+                        'market': f'{self.goal}',
+                        'id': id,
                         'ammount_use': self.money,
                         'duration_in_min': self.expiration_mode,
-                        'message': 'Call option placed',
-                        'state': 'pending'
+                        'type': 'operation',  
+                        'state': 'pending',
+                        'message': 'Call option placed'
                     }
-                    operation_datat = json.dumps(operation_data)
+                    self.repository.insert('operations', operation_data)
+                    
+                    operation_data = json.dumps(operation_data)
                     await self.send_to_socket(self.writer, operation_data)
-                    await self.repository.insert('operations', operation_data)
+
+
+                    # data = json.dumps(data)
+                    # # await self.send_to_socket_new_veil(self.writer, data)
+                    # await self.send_to_socket(self.writer, data)
+                    # print('CALL option placed')
+
+                    # operation_data = {
+                    #     'id': id,
+                    #     'type': 'operation',
+                    #     'market': f'{self.goal}',
+                    #     'date': f'{datetime.datetime.now()}',
+                    #     'ammount_use': self.money,
+                    #     'duration_in_min': self.expiration_mode,
+                    #     'message': 'Call option placed',
+                    #     'state': 'pending'
+                    # }
+                    # operation_data = json.dumps(operation_data)
+                    # await self.send_to_socket(self.writer, operation_data)
+                    # await self.repository.insert('operations', operation_data)
 
                     result, amount = connector.api.check_win_v4(id)
 
@@ -135,17 +150,37 @@ class Trader:
                     if result != 'loose':
                         win = 1
 
-                    datos = {
+                    result_data = {
                         'date': f'{datetime.datetime.now()}',
                         'market': f'{self.goal}',
+                        'id': id,
                         'result': win,
                         'ammount_use': self.money,
                         'profit': amount,
                         'duration_in_min': self.expiration_mode,
                         'type': 'call',
-                        'state': 'pending'
+                        'state': 'finished',
+                        'message': 'No benefits'
                     }
-                    self.repository.insert('operations', datos)
+
+                    print('ahora lo va a actualizar')
+                    self.repository.update('operations', result_data, {'id': id})
+                    print('ahora lo actualizo')
+
+                    result_data = json.dumps(result_data)
+                    await self.send_to_socket(self.writer, result_data)
+
+                    # datos = {
+                    #     'date': f'{datetime.datetime.now()}',
+                    #     'market': f'{self.goal}',
+                    #     'result': win,
+                    #     'ammount_use': self.money,
+                    #     'profit': amount,
+                    #     'duration_in_min': self.expiration_mode,
+                    #     'type': 'call',
+                    #     'state': 'pending'
+                    # }
+                    # self.repository.insert('operations', datos)
 
                     # result_data = {
                     #     'result': win,
@@ -170,9 +205,25 @@ class Trader:
 
                 if check:
 
-                    data = json.dumps(data)
-                    # await self.send_to_socket_new_veil(self.writer, data)
-                    await self.send_to_socket(self.writer, data)
+                    # data = json.dumps(data)
+                    # await self.send_to_socket(self.writer, data)
+
+                    operation_data = {
+                        'date': f'{datetime.datetime.now()}',
+                        'market': f'{self.goal}',
+                        'id': id,
+                        'ammount_use': self.money,
+                        'duration_in_min': self.expiration_mode,
+                        'type': 'operation',  
+                        'state': 'pending',
+                        'message': 'Put option placed'
+                    }
+                    self.repository.insert('operations', operation_data)
+                    operation_data = json.dumps(operation_data)
+                    await self.send_to_socket(self.writer, operation_data)
+
+
+
                     print('PUT option placed')
                     result, amount = connector.api.check_win_v4(id)
 
@@ -180,17 +231,37 @@ class Trader:
                     if result != 'loose':
                         win = 1
 
-                    datos = {
+                    result_data = {
                         'date': f'{datetime.datetime.now()}',
                         'market': f'{self.goal}',
+                        'id': id,
                         'result': win,
                         'ammount_use': self.money,
                         'profit': amount,
                         'duration_in_min': self.expiration_mode,
-                        'type': 'put',
-                        'state': 'pending'
+                        'type': 'call',
+                        'state': 'finished',
+                        'message': 'No benefits'
                     }
-                    self.repository.insert('operations', datos)
+
+                    print('ahora lo va a actualizar')
+                    self.repository.update('operations', result_data, {'id': id})
+                    print('ahora lo actualizo')
+
+                    result_data = json.dumps(result_data)
+                    await self.send_to_socket(self.writer, result_data)
+
+                    # datos = {
+                    #     'date': f'{datetime.datetime.now()}',
+                    #     'market': f'{self.goal}',
+                    #     'result': win,
+                    #     'ammount_use': self.money,
+                    #     'profit': amount,
+                    #     'duration_in_min': self.expiration_mode,
+                    #     'type': 'put',
+                    #     'state': 'pending'
+                    # }
+                    # self.repository.insert('operations', datos)
                     # repository.insert('operations', datos)
 
                     print(result)
@@ -213,16 +284,19 @@ class Trader:
                 try:
                     print('y se envio por socket')
                     # TODO: esta enviando la informacion mediante sockets al front
-                    # datos = {
-                    #     'date': f'{datetime.datetime.now()}',
-                    #     'market': 'EURUSD',
-                    #     'result': 1,
-                    #     'ammount_use': 10.0,
-                    #     'profit': 9.0,
-                    #     'duration_in_min': 60,
-                    #     'type': 'put'
-                    # }
-                    # self.repository.insert('operations', datos)
+                    operation_data = {
+                        'date': f'{datetime.datetime.now()}',
+                        'market': f'{self.goal}',
+                        'id': id,
+                        'ammount_use': self.money,
+                        'duration_in_min': self.expiration_mode,
+                        'type': 'new_veil',
+                        'state': 'pending',
+                        'message': 'Se ha abierto una nueva vela y no se han cumplido los parametros, el bot sigue analizando.'
+                    }
+
+                    operation_data = json.dumps(operation_data)
+                    await self.send_to_socket(self.writer, operation_data)
 
                     operation_data = {
                         'date': f'{datetime.datetime.now()}',
@@ -273,16 +347,6 @@ class Trader:
             # t.sleep(0.5)
             await asyncio.sleep(0.5)
 
-    # async def send_to_socket_new_veil(self, writer, data):
-    #     print('Entra aca')
-    #     # message = f'Se abrio una nueva vela maquinola y la anterior cerro en {data["close"]}'
-    #     if data["close"] != '':
-    #         message = f'{datetime.datetime.now()} {data["message"]}. La vela cerro en: {data["close"]}'
-    #     else:
-    #         message = f'{datetime.datetime.now()} {data["message"]}'
-    #     writer.write(message.encode())
-    #     await writer.drain()
-    #     print('Se envio la nueva vela por socket')
 
     async def send_to_socket(self, writer, data):
         writer.write(str(data).encode())

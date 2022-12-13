@@ -143,11 +143,11 @@ def trade(body):
         print('Esta entrando aca', e)
         return {'error': e}
 
-@route('/api/home', 'GET')
-def get_home():
-    # open the home.html and return it
-    with open('home.html', 'rb') as f: # TODO: desacoplar esta funcion para renderizar html
-        return f.read()
+# @route('/api/home', 'GET')
+# def get_home():
+#     # open the home.html and return it
+#     with open('home.html', 'rb') as f: # TODO: desacoplar esta funcion para renderizar html
+#         return f.read()
 
 connector = None
 @route('/api/login', 'POST')
