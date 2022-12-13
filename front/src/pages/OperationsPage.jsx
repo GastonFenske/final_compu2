@@ -16,6 +16,7 @@ export const OperationsPage = () => {
         const data = await resp.json();
         setOperations(data.operations);
         setLoading(false);
+        console.log(operations, 'operations')
     }
 
     useEffect(() => {

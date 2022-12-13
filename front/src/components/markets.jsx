@@ -96,7 +96,7 @@ export const MarketsComponent = () => {
                   className='btn btn-success'
                   onClick={ () => startTrading(market.name, money) }
                 >
-                  Operando
+                  Stop Trade
                 </button>
                 :
                 <button 

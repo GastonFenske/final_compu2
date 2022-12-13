@@ -202,3 +202,12 @@ def get_operations():
     return {
         'operations': operations
     }
+
+@route('/api/operations-pending', "GET")
+def get_operations_pending():
+    repository = Repository()
+    operations = repository.select_pending_operations('operations', '*')
+    print(operations, 'operations desde el GET')
+    return {
+        'operations': operations
+    }

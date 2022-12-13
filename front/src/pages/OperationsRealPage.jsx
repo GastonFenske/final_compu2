@@ -8,11 +8,24 @@ import io from 'socket.io-client'
 
 export const OperationsRealPage = () => {
 
+
     const [msj, setMsj] = useState('nada')
     const [messages, setMessages] = useState([])
     // const [operationInfo, setOperationInfo] = useState({})
 
     const [operations, setOperations] = useState([])
+    const [ids, setIds] = useState([])
+    const [newOperations, setNewOperations] = useState([])
+
+    const getOperations = async () => {
+      // setLoading(true);
+      const url = 'http://127.0.0.1:1234/api/operations-pending'
+      const resp = await fetch(url)
+      const data = await resp.json();
+      setOperations(data.operations);
+      // setLoading(false);
+      console.log(operations, 'operations')
+    }
 
     const getInfo = () => {
         // console.log('Entra al get info')
@@ -22,18 +35,18 @@ export const OperationsRealPage = () => {
 
 
 
-        socket.on('message', (message) => {
-            console.log(message, 'message que llega desde el server asyncio')
-            setMessages([...messages, message])
-            setMsj(message)
-            // disconnect socket
-            // socket.disconnect()
-        })
+        // socket.on('message', (message) => {
+        //     console.log(message, 'message que llega desde el server asyncio')
+        //     setMessages([...messages, message])
+        //     setMsj(message)
+        //     // disconnect socket
+        //     // socket.disconnect()
+        // })
 
         socket.on('server:newVeil', (message) => {
           // conver message str to json
 
-          console.log(message, 'message que llega desde el server asyncio')
+          // console.log(message, 'message que llega desde el server asyncio')
           // const este = JSON.parse(message)
           // console.log(este, 'este')
 
@@ -66,31 +79,108 @@ export const OperationsRealPage = () => {
         // setMsj(msj)
     }
 
+    // const handleNewOperation = (data) => {
+
+    //   const newOperations = operations.map((operation) => {
+
+    //     if (operation.id === data.id) {
+    //       return {
+    //         ...operation,
+    //         state: data.state,
+    //         profit: data.profit,
+    //         message: data.message
+    //       }
+    //     }
+    //     return operation
+    //   })
+
+    //   setOperations(newOperations)
+
+    // } 
+
     const setNewInfo = (data) => {
 
       if (data.type === 'new_veil') {
         data = JSON.stringify(data)
         setMessages([...messages, data])
         setMsj(data)
+
       } else {
 
+        if (ids.includes(data.id)) {
+          console.log('Llega una operacion que ya existe')
+
+          const newOperations = operations.map((operation) => {
+
+            if (operation.id === data.id) {
+
+              return {
+                ...operation,
+                state: data.state,
+                profit: data.profit,
+                message: data.message
+              }
+            }
+            return operation
+          })
+
+          setOperations(newOperations)
+
+          return
+        }
+  
         setOperations([...operations, data])
-        // setOperationInfo(data)
-        console.log(data, 'operation')
+        setIds([...ids, data.id])
+
+ 
+
 
       }
 
-    }
+        // setOperations(operations)
+  
+        // if (ids.includes(data.id)) {
+        //   console.log('Llega una operacion que ya existe')
+        //   return
+        // }  
+
+
+        // console.log('Llega una operacion nueva')
+        // setOperations([...operations, data])
+        
+
+        
+
+
+        // setOperations([...operations, data])
+        // setOperationInfo(data)
+        // console.log(data, 'operation')
+        // console.log(operations)
+
+
+      }
 
 
 
+    // update operations in DOM
+    // useEffect(() => {
+    //   // console.log(operations, 'operations')
+    // }, [operations])
 
-    const disconnectSocket = () => {
-      socket.disconnect()
-    }
+
+    // const disconnectSocket = () => {
+    //   socket.disconnect()
+    // }
 
     useEffect(() => {
       
+      getOperations()
+    
+    }, [])
+    
+
+    useEffect(() => {
+    
         const socket = getInfo()
 
         // const socket = io('http://127.0.0.1:8000')
@@ -105,7 +195,7 @@ export const OperationsRealPage = () => {
         socket.disconnect()
       }
 
-    }, [])
+    }, [ operations ])
     
 
   return (
@@ -129,17 +219,18 @@ export const OperationsRealPage = () => {
 
                 {
                   operations.map((operation) => (
-                    <div className="card bg-dark" key={operation.id}>
+                    <div className="card bg-dark mb-4" key={operation.id}>
                       <div className="card-header my-1">
                         Operation #{operation.id}
                       </div>
                       <div className="card-body">
-                        <h5 className="card-title">{operation.market}</h5>
-                        <p className="card-text my-2">{operation.message}</p>
-                        <p className="card-text my-2">{operation.date}</p>
-                        <p className="card-text my-2">{operation.ammount_use}</p>
-                        <p className="card-text my-2">{operation.state}</p>
-                        <p href="#" className="btn btn-iq">Time: {operation.duration_in_min}</p>
+                        <h5 className="card-title">Market: {operation.market}</h5>
+                        <p className="card-text my-2">Message: {operation.message}</p>
+                        <p className="card-text my-2">Date: {operation.date}</p>
+                        <p className="card-text my-2">Amount: {operation.ammount_use}</p>
+                        <p className="card-text my-2">Profit: {operation.profit}</p>
+                        <p className="btn btn-iq my-2">State: {operation.state}</p>
+                        {/* <p href="#" className="btn btn-iq">Time remaining: {operation.duration_in_min}</p> */}
                       </div>
                     </div>
                   ))
@@ -165,4 +256,5 @@ export const OperationsRealPage = () => {
         </div>
     </>
   )
+
 }

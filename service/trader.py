@@ -96,6 +96,7 @@ class Trader:
             data = AsyncResult(data.id).get()
             signal = data['signal']
             close = data['close']
+            id = data['id']
             print(signal, 'signal')
 
 
@@ -107,18 +108,26 @@ class Trader:
                 print('call', datetime.datetime.now())
 
                 if check:
-                    await self.send_to_socket_new_veil(self.writer, data)
+
+
+                    data = json.dumps(data)
+                    # await self.send_to_socket_new_veil(self.writer, data)
+                    await self.send_to_socket(self.writer, data)
                     print('CALL option placed')
 
                     operation_data = {
+                        'id': id,
                         'type': 'operation',
-                        'date': f'{datetime.datetime.now()}',
                         'market': f'{self.goal}',
+                        'date': f'{datetime.datetime.now()}',
                         'ammount_use': self.money,
                         'duration_in_min': self.expiration_mode,
                         'message': 'Call option placed',
+                        'state': 'pending'
                     }
+                    operation_datat = json.dumps(operation_data)
                     await self.send_to_socket(self.writer, operation_data)
+                    await self.repository.insert('operations', operation_data)
 
                     result, amount = connector.api.check_win_v4(id)
 
@@ -133,7 +142,8 @@ class Trader:
                         'ammount_use': self.money,
                         'profit': amount,
                         'duration_in_min': self.expiration_mode,
-                        'type': 'call'
+                        'type': 'call',
+                        'state': 'pending'
                     }
                     self.repository.insert('operations', datos)
 
@@ -159,7 +169,10 @@ class Trader:
 
 
                 if check:
-                    await self.send_to_socket_new_veil(self.writer, data)
+
+                    data = json.dumps(data)
+                    # await self.send_to_socket_new_veil(self.writer, data)
+                    await self.send_to_socket(self.writer, data)
                     print('PUT option placed')
                     result, amount = connector.api.check_win_v4(id)
 
@@ -174,7 +187,8 @@ class Trader:
                         'ammount_use': self.money,
                         'profit': amount,
                         'duration_in_min': self.expiration_mode,
-                        'type': 'put'
+                        'type': 'put',
+                        'state': 'pending'
                     }
                     self.repository.insert('operations', datos)
                     # repository.insert('operations', datos)
@@ -211,17 +225,42 @@ class Trader:
                     # self.repository.insert('operations', datos)
 
                     operation_data = {
-                        'id': 'JD5454NHB434',
-                        'type': 'operation',  
                         'date': f'{datetime.datetime.now()}',
                         'market': f'{self.goal}',
+                        'id': id,
                         'ammount_use': self.money,
                         'duration_in_min': self.expiration_mode,
-                        'message': 'Call option placed',
-                        'state': 'pending'
+                        'type': 'operation',  
+                        'state': 'pending',
+                        'message': 'Call option placed'
                     }
+                    self.repository.insert('operations', operation_data)
+
                     operation_data = json.dumps(operation_data)
                     await self.send_to_socket(self.writer, operation_data)
+
+                    await asyncio.sleep(10)
+                    # print('ahora va a actualizar')
+
+                    result_data = {
+                        'date': f'{datetime.datetime.now()}',
+                        'market': f'{self.goal}',
+                        'id': id,
+                        'result': 1,
+                        'ammount_use': self.money,
+                        'profit': 9.0,
+                        'duration_in_min': self.expiration_mode,
+                        'type': 'call',
+                        'state': 'finished',
+                        'message': 'No benefits'
+                    }
+
+                    print('ahora lo va a actualizar')
+                    self.repository.update('operations', result_data, {'id': id})
+                    print('ahora lo actualizo')
+
+                    result_data = json.dumps(result_data)
+                    await self.send_to_socket(self.writer, result_data)
 
                     # await self.send_to_socket_new_veil(self.writer, data)
                 except Exception as e:
@@ -234,16 +273,16 @@ class Trader:
             # t.sleep(0.5)
             await asyncio.sleep(0.5)
 
-    async def send_to_socket_new_veil(self, writer, data):
-        print('Entra aca')
-        # message = f'Se abrio una nueva vela maquinola y la anterior cerro en {data["close"]}'
-        if data["close"] != '':
-            message = f'{datetime.datetime.now()} {data["message"]}. La vela cerro en: {data["close"]}'
-        else:
-            message = f'{datetime.datetime.now()} {data["message"]}'
-        writer.write(message.encode())
-        await writer.drain()
-        print('Se envio la nueva vela por socket')
+    # async def send_to_socket_new_veil(self, writer, data):
+    #     print('Entra aca')
+    #     # message = f'Se abrio una nueva vela maquinola y la anterior cerro en {data["close"]}'
+    #     if data["close"] != '':
+    #         message = f'{datetime.datetime.now()} {data["message"]}. La vela cerro en: {data["close"]}'
+    #     else:
+    #         message = f'{datetime.datetime.now()} {data["message"]}'
+    #     writer.write(message.encode())
+    #     await writer.drain()
+    #     print('Se envio la nueva vela por socket')
 
     async def send_to_socket(self, writer, data):
         writer.write(str(data).encode())
@@ -257,4 +296,3 @@ class Trader:
 
     
 # Trader.start_trade(None)
-

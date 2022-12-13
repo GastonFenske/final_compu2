@@ -58,6 +58,8 @@ class Server:
         print(request.protocol, 'PROTOCOL')
         if request.protocol == 'HTTP/1.1':
             print('ES PROT HTTP')
+            # trader = Trader()
+            # trader.writer = writer
             pass
         else:
             print('ENTRA A SOCKETS')
