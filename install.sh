@@ -1,4 +1,17 @@
 #!/bin/bash
-# virtualenv venv
-source venv/bin/activate #activar entorno virtual
-pip3 install -r requirements.txt #instalar la lista de modulos necesarios
+
+"""
+Hay que tener instalado node 18
+Hay que tener instalado python 3
+Hay que tener instalado pip
+Hay que tener instalado yarn
+Hay que tener instalado redis y encendido
+Hay que tener instalado MySQL y encendio
+"""
+
+
+python3 api/iqoptionapi/setup.py install
+pip install -r requirements.txt
+
+npm install --global yarn
+cd util && npm install && cd ..

@@ -7,3 +7,4 @@ share
 .env
 /env
 /constants.py
+/utils/node_modules

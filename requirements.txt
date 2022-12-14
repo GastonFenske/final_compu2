@@ -3,9 +3,4 @@ redis
 PyMySQL
 python-dotenv
 cryptography
-# dotenv
-email
-ssl
-smpplib
-pandas
-numpy
+# pandas
