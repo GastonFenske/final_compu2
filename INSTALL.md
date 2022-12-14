@@ -4,12 +4,10 @@
 
 Tener instalado docker de no ser así siga los pasos a continuación
 
-- Abrir la terminal
+Visitar la página oficial de docker 
 
-```bash
-sudo apt update
-sudo apt install docker.io
-```
+https://docs.docker.com/desktop/install/linux-install/
+
 Verificar si se instaló correctamente
 
 ```bash 
@@ -22,5 +20,29 @@ docker --version
 luego de confirmar que tenemos docker en nuestra máquina ejecutar el contenedor docker del proyecto
 
 ```bash 
-docker run tradingbot
+docker compose up
+```
+
+## Celery
+En la carpeta 'service' ejecutamos el siguiente comando
+```bash
+bash worker.sh
+```
+
+## Servidor backend
+En la carpeta principal (final_compu2)
+```bash 
+bash boot.sh
+```
+
+## React
+En la carpeta 'front' 
+```bash 
+bash boot.sh
+```
+
+## Node
+En la carpeta 'utils'
+```bash 
+bash boot.sh
 ```
