@@ -120,7 +120,7 @@ class Trader:
                         'message': 'Call option placed'
                     }
                     self.repository.insert('operations', operation_data)
-                    
+
                     operation_data = json.dumps(operation_data)
                     await self.send_to_socket(self.writer, operation_data)
 
