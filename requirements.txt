@@ -3,4 +3,4 @@ redis
 PyMySQL
 python-dotenv
 cryptography
-pandas
+# pandas

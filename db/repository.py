@@ -18,17 +18,14 @@ class Repository:
             # passwd=config["password"],
             # host=config["host"],
             # database=config["database"]
-<<<<<<< HEAD
-            user='douglas',
-            passwd='douglas',
-            host='localhost',
-            database='tradingbot'
-=======
+            # user='douglas',
+            # passwd='douglas',
+            # host='localhost',
+            # database='tradingbot'
             user=DB_USER,
             passwd=DB_PASSWORD,
             host=DB_HOST,
             database=DB_DATABASE
->>>>>>> 8f291d7fbbc5c530a43c75e7c73bccdbb7e36584
         )
 
     def insert(self, table: str, data: dict):

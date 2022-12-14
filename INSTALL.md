@@ -1,48 +1,49 @@
+# Descargar el repositorio
+Abrir una terminal y ejecutar los siguientes comandos
+
+```bash 
+git clone https://github.com/GastonFenske/final_compu2.git
+```
+
 # INSTALACIÓN (SOLO SISTEMAS UNIX)
 
-## Docker
-
-Tener instalado docker de no ser así siga los pasos a continuación
-
-Visitar la página oficial de docker 
-
-https://docs.docker.com/desktop/install/linux-install/
-
-Verificar si se instaló correctamente
+## Python3
 
 ```bash 
-docker
-```
-o tambien verificando la version
-```bash 
-docker --version
-```
-luego de confirmar que tenemos docker en nuestra máquina ejecutar el contenedor docker del proyecto
-
-```bash 
-docker compose up
+sudo apt install python3
 ```
 
-## Celery
-En la carpeta 'service' ejecutamos el siguiente comando
+## Nodejs
 ```bash
-bash worker.sh
+sudo apt install nodejs
+sudo apt install npm
+```
+
+## MySQL
+```bash
+sudo apt install mysql-server
+```
+> Nota: Hay que configurar el usuario y la contraseña al instalar MySQL se puede con los siguientes comandos
+```bash
+sudo mysql_secure_installation
+```
+> IMPORTANTE: Crear la base de datos con MySQL que está en la carpeta **db/**
+## Celery
+```bash
+bash worker_celery.sh
 ```
 
 ## Servidor backend
-En la carpeta principal (final_compu2)
 ```bash 
 bash boot.sh
 ```
 
 ## React
-En la carpeta 'front' 
 ```bash 
-bash boot.sh
+bash front.sh
 ```
 
 ## Node
-En la carpeta 'utils'
 ```bash 
-bash boot.sh
+bash adapter.sh
 ```

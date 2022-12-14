@@ -13,6 +13,9 @@ RUN apk add --update curl gcc g++ libffi-dev openssl-dev build-base linux-header
     apk add mariadb-dev py3-mysqlclient mysql-client && \
     rm -rf /var/cache/apk/*
 
+RUN cd /home/app/api/iqoptionapi && \
+    python3 setup.py install
+
 # COPY requirements.txt /home/app
 # ADD requirements.txt ./requirements.txt
 ADD requirements.txt ./requirements.txt
