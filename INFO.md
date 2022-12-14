@@ -12,4 +12,8 @@ Usamos redis para el envio de tareas que nos pide el front y la procese el celer
 
 ## React
 
-Adoptamos react porque su reactividad en el front nos es muy benéfico ya que trabajamos con el mercado que se actualiza constantemente
+Adoptamos react porque su reactividad en el front nos es muy benéfico ya que trabajamos con el mercado que se actualiza constantemente y se ve reflejado en la web
+
+## MySQL
+Usamos una base de datos MySQL para guardar perfiles de usuarios y operaciones que realicen por medio de nuestro servicio
+
