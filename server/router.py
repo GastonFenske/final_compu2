@@ -143,11 +143,11 @@ def trade(body):
         print('Esta entrando aca', e)
         return {'error': e}
 
-@route('/api/home', 'GET')
-def get_home():
-    # open the home.html and return it
-    with open('home.html', 'rb') as f: # TODO: desacoplar esta funcion para renderizar html
-        return f.read()
+# @route('/api/home', 'GET')
+# def get_home():
+#     # open the home.html and return it
+#     with open('home.html', 'rb') as f: # TODO: desacoplar esta funcion para renderizar html
+#         return f.read()
 
 connector = None
 @route('/api/login', 'POST')
@@ -220,6 +220,15 @@ def login():
 def get_operations():
     repository = Repository()
     operations = repository.select('operations', '*')
+    print(operations, 'operations desde el GET')
+    return {
+        'operations': operations
+    }
+
+@route('/api/operations-pending', "GET")
+def get_operations_pending():
+    repository = Repository()
+    operations = repository.select_pending_operations('operations', '*')
     print(operations, 'operations desde el GET')
     return {
         'operations': operations

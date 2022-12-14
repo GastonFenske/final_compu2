@@ -16,12 +16,14 @@ USE `tradingbot` ;
 CREATE TABLE IF NOT EXISTS `tradingbot`.`operations` (
   `date` VARCHAR(100) NOT NULL,
   `market` VARCHAR(100) NOT NULL,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `result` TINYINT(1) NOT NULL,
+  `id` INT NOT NULL,
+  `result` TINYINT(1),
   `ammount_use` DECIMAL NOT NULL,
-  `profit` DECIMAL NOT NULL,
+  `profit` DECIMAL,
   `duration_in_min` INT NOT NULL,
   `type` VARCHAR(100) NOT NULL,
+  `state` VARCHAR(100) DEFAULT 'pending' NOT NULL,
+  `message` VARCHAR(200),
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 0

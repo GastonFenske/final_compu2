@@ -90,7 +90,7 @@ export const TableComponent = (operations) => {
                     <th scope="col">Amount use</th>
                     <th scope="col">Profit</th>
                     <th scope='col'>Type</th>
-                    <th scope="col">Duration in seconds</th>
+                    <th scope="col">Duration in minutes</th>
                     </tr>
 
                 </thead>
@@ -127,7 +127,7 @@ export const TableComponent = (operations) => {
                                 <td>{operation.ammount_use} U$D</td>
                                 <td>{operation.profit} U$D</td>
                                 <td>{operation.type}</td>
-                                <td>{operation.duration_in_min} seconds</td>
+                                <td>{operation.duration_in_min} minutes</td>
                             </tr>
 
                             // create a tr for sum the values

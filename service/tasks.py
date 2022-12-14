@@ -73,7 +73,8 @@ def analize_last_candles(candles):
             data = {
                 'close': close,
                 'signal': '',
-                'message': ''
+                'message': '',
+                'id': ''
             }
 
             if close < lower_band:
@@ -81,18 +82,21 @@ def analize_last_candles(candles):
                 # TODO: podemos ver si cambia el id de la vela entonces perforo y cerro
                 data['signal'] = 'call'
                 data['message'] = 'Perforo la banda inferior y cerro. El bot compro a la alza'
+                data['id'] = str(current_candle)
                 return data
                 # return 'call'
             elif close > upper_band:
                 # print('Entro al put')
                 data['signal'] = 'put'
                 data['message'] = 'Perforo la banda superior y cerro. El bot compro a la baja'
+                data['id'] = str(current_candle)
                 return data
                 # return 'put'
             else:
                 print('Entra al hold2')
                 data['signal'] = 'new_veil'
-                data['message'] = 'No perforo la banda superior ni inferior. El bot se mantiene a la espera'
+                data['message'] = 'No perforo la banda superior ni inferior. El bot se mantiene a la espera',
+                data['id'] = str(current_candle)
                 return data
                 # return 'hold2', close
 
@@ -100,7 +104,8 @@ def analize_last_candles(candles):
         return {
             'close': '',
             'signal': 'hold',
-            'message': 'Aun no se dan los parametros establecidos'
+            'message': 'Aun no se dan los parametros establecidos',
+            'id': ''
         }
 
 
