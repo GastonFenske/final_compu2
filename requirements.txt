@@ -1,6 +1,7 @@
 celery
 redis
-PyMySQL
+# PyMySQL
 python-dotenv
-cryptography
+# cryptography
 # pandas
+mysql-connector-python

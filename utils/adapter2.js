@@ -13,10 +13,29 @@ const io = new SocketIOServer(server, {
 });
 
 const client = new net.Socket();
-client.connect(1234, '127.0.0.1', () => {
-    console.log('Connected al back de python, es decir al sv asincronico');
-    client.write('Hello, server! Love, Client.');
+
+// try to connect to python server until it is up
+const connectToPythonServer = () => {
+    client.connect(1234, '127.0.0.1', () => {
+        console.log('Connected al back de python, es decir al sv asincronico');
+        client.write('Hello, server! Love, Client.');
+    });
+}
+
+// try to connect to python server until it is up
+client.on('error', (error) => {
+    console.log('Error al conectar con el back de python, es decir al sv asincronico');
+    console.log(error);
+    setTimeout(connectToPythonServer, 1000);
 });
+
+connectToPythonServer();
+
+
+// client.connect(1234, '127.0.0.1', () => {
+//     console.log('Connected al back de python, es decir al sv asincronico');
+//     client.write('Hello, server! Love, Client.');
+// });
 
 // client.on('data', (data) => {
 //     console.log('Received: ' + data);

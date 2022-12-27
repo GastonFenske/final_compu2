@@ -1,0 +1,8 @@
+version: '0.1'
+
+services:
+    frontproof:
+        build: .
+        ports:
+            - "5173:5173"
+    

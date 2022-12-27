@@ -326,7 +326,7 @@ class Trader:
                         'duration_in_min': self.expiration_mode,
                         'type': 'call',
                         'state': 'finished',
-                        'message': 'No benefits'
+                        'message': 'Ganaste $9.0'
                     }
 
                     print('ahora lo va a actualizar')

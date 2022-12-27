@@ -1,7 +1,8 @@
-import pymysql, json
+# import pymysql, json
 from utils.singleton import SingletonPattern
 from models.operation import Operation
 from constants import *
+import mysql.connector
 
 singleton = SingletonPattern()
 
@@ -13,15 +14,24 @@ class Repository:
         # with open("config.json", "r") as j:
         #     config = json.load(j)
 
-        self.db = pymysql.connect(
-            # user=config["user"],
-            # passwd=config["password"],
-            # host=config["host"],
-            # database=config["database"]
-            user=DB_USER,
-            passwd=DB_PASSWORD,
-            host=DB_HOST,
-            database=DB_DATABASE
+        # self.db = pymysql.connect(
+        #     # user=config["user"],
+        #     # passwd=config["password"],
+        #     # host=config["host"],
+        #     # database=config["database"]
+        #     user=DB_USER,
+        #     passwd=DB_PASSWORD,
+        #     host=DB_HOST,
+        #     database=DB_DATABASE
+        # )
+
+        self.db = mysql.connector.connect(
+            user='root',
+            password='fenske12',
+            # host='localhost',
+            host='mysql',
+            port='3306',
+            database='tradingbot'
         )
 
     def insert(self, table: str, data: dict):
