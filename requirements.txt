@@ -3,5 +3,5 @@ redis
 # PyMySQL
 python-dotenv
 # cryptography
-# pandas
+pandas
 mysql-connector-python

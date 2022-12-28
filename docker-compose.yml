@@ -1,15 +1,18 @@
 version: "1.1"
 
 services:
-    tradingbot:
+    python:
         build: .
         ports:
             - "1234:1234"
         depends_on:
             - mysql
             - redis
-            - adapter
-        container_name: tradingbot
+        # links:
+        #     - node
+        # container_name: tradingbot
+        # networks:
+        #     - red
 
     mysql:
         build: ./db/
@@ -19,7 +22,7 @@ services:
         environment:
             - MYSQL_ROOT_PASSWORD=fenske12
             - MYSQL_DATABASE=dockerproof
-        container_name: tradingbot_db
+        # container_name: tradingbot_db
 
     redis:
         image: "redis:alpine"
@@ -31,13 +34,15 @@ services:
         command: sh -c "cd /app/service && celery -A celery_app worker --loglevel INFO"
         depends_on:
             - redis
-            - tradingbot
+            - python
 
-    adapter:
+    node:
         build: ./utils/
         ports: 
             - "8000:8000"
-        container_name: adapter_nodejs
+        # container_name: adapter_nodejs
+        # networks:
+        #     - red
 
     front:
         build: ./front/
@@ -45,4 +50,6 @@ services:
             - "5173:5173"
         container_name: react_front
 
+# networks:
+#     red:
 
