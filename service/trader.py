@@ -115,6 +115,20 @@ class Trader:
                         'id': id,
                         'ammount_use': self.money,
                         'duration_in_min': self.expiration_mode,
+                        'type': 'new_veil',
+                        'state': 'pending',
+                        'message': 'El bot encontro una concidencia en el patron y ha abierto una nueva operacion de tipo CALL'
+                    }
+
+                    operation_data = json.dumps(operation_data)
+                    await self.send_to_socket(self.writer, operation_data)
+
+                    operation_data = {
+                        'date': f'{datetime.datetime.now()}',
+                        'market': f'{self.goal}',
+                        'id': id,
+                        'ammount_use': self.money,
+                        'duration_in_min': self.expiration_mode,
                         'type': 'operation',  
                         'state': 'pending',
                         'message': 'Call option placed'
@@ -205,6 +219,20 @@ class Trader:
 
                 if check:
 
+                    operation_data = {
+                        'date': f'{datetime.datetime.now()}',
+                        'market': f'{self.goal}',
+                        'id': id,
+                        'ammount_use': self.money,
+                        'duration_in_min': self.expiration_mode,
+                        'type': 'new_veil',
+                        'state': 'pending',
+                        'message': 'El bot encontro una concidencia en el patron y ha abierto una nueva operacion de tipo PUT'
+                    }
+
+                    operation_data = json.dumps(operation_data)
+                    await self.send_to_socket(self.writer, operation_data)
+
                     # data = json.dumps(data)
                     # await self.send_to_socket(self.writer, data)
 
@@ -281,6 +309,8 @@ class Trader:
             
             elif signal == 'new_veil':
                 print(f'Se abrio una nueva vela maquinola y la anterior cerro en {close}')
+
+                # =========
                 try:
                     print('y se envio por socket')
                     # TODO: esta enviando la informacion mediante sockets al front
@@ -336,10 +366,99 @@ class Trader:
                     result_data = json.dumps(result_data)
                     await self.send_to_socket(self.writer, result_data)
 
+                
+
                     # await self.send_to_socket_new_veil(self.writer, data)
                 except Exception as e:
                     print(e, 'error en el send to socket')
                     pass
+                # =====
+
+                # print('put', datetime.datetime.now())
+                # check, id = connector.api.buy(self.money, self.goal, 'put', 1)
+
+
+                # if check:
+
+                #     # data = json.dumps(data)
+                #     # await self.send_to_socket(self.writer, data)
+
+                #     operation_data = {
+                #         'date': f'{datetime.datetime.now()}',
+                #         'market': f'{self.goal}',
+                #         'id': id,
+                #         'ammount_use': self.money,
+                #         'duration_in_min': self.expiration_mode,
+                #         'type': 'new_veil',
+                #         'state': 'pending',
+                #         'message': 'El bot encontro una concidencia en el patron y ha abierto una nueva operacion de tipo PUT'
+                #     }
+
+                #     operation_data = json.dumps(operation_data)
+                #     await self.send_to_socket(self.writer, operation_data)
+
+                #     operation_data = {
+                #         'date': f'{datetime.datetime.now()}',
+                #         'market': f'{self.goal}',
+                #         'id': id,
+                #         'ammount_use': self.money,
+                #         'duration_in_min': self.expiration_mode,
+                #         'type': 'operation',  
+                #         'state': 'pending',
+                #         'message': 'Put option placed'
+                #     }
+                #     self.repository.insert('operations', operation_data)
+                #     operation_data = json.dumps(operation_data)
+                #     await self.send_to_socket(self.writer, operation_data)
+
+
+
+                #     print('PUT option placed')
+                #     result, amount = connector.api.check_win_v4(id)
+
+                #     win = 0
+                #     if result != 'loose':
+                #         win = 1
+
+                #     result_data = {
+                #         'date': f'{datetime.datetime.now()}',
+                #         'market': f'{self.goal}',
+                #         'id': id,
+                #         'result': win,
+                #         'ammount_use': self.money,
+                #         'profit': amount,
+                #         'duration_in_min': self.expiration_mode,
+                #         'type': 'call',
+                #         'state': 'finished',
+                #         'message': 'No benefits'
+                #     }
+
+                #     print('ahora lo va a actualizar')
+                #     self.repository.update('operations', result_data, {'id': id})
+                #     print('ahora lo actualizo')
+
+                #     result_data = json.dumps(result_data)
+                #     await self.send_to_socket(self.writer, result_data)
+
+                #     # datos = {
+                #     #     'date': f'{datetime.datetime.now()}',
+                #     #     'market': f'{self.goal}',
+                #     #     'result': win,
+                #     #     'ammount_use': self.money,
+                #     #     'profit': amount,
+                #     #     'duration_in_min': self.expiration_mode,
+                #     #     'type': 'put',
+                #     #     'state': 'pending'
+                #     # }
+                #     # self.repository.insert('operations', datos)
+                #     # repository.insert('operations', datos)
+
+                #     print(result)
+                #     # writing.delay('put', result, amount)
+                #     # with open('operations.csv', 'a') as file:
+                #     #     file.write(f'PUT option placed, result: {result}\n')
+                # else:
+                #     print('PUT option failed')
 
             # else:
             #     print('hold')

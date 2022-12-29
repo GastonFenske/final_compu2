@@ -28,8 +28,8 @@ class Repository:
         self.db = mysql.connector.connect(
             user='root',
             password='fenske12',
-            # host='localhost',
-            host='mysql',
+            host='localhost',
+            # host='mysql',
             port='3306',
             database='tradingbot'
         )
