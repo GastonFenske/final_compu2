@@ -9,3 +9,4 @@ share
 /constants.py
 /utils/node_modules
 /service/candles.csv
+dump.rdb
