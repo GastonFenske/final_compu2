@@ -8,11 +8,6 @@ services:
         depends_on:
             - mysql
             - redis
-        # links:
-        #     - node
-        # container_name: tradingbot
-        # networks:
-        #     - red
 
     mysql:
         build: ./db/
@@ -22,7 +17,6 @@ services:
         environment:
             - MYSQL_ROOT_PASSWORD=fenske12
             - MYSQL_DATABASE=dockerproof
-        # container_name: tradingbot_db
 
     redis:
         image: "redis:alpine"
@@ -40,16 +34,10 @@ services:
         build: ./utils/
         ports: 
             - "8000:8000"
-        # container_name: adapter_nodejs
-        # networks:
-        #     - red
 
     front:
         build: ./front/
         ports:
             - "5173:5173"
         container_name: react_front
-
-# networks:
-#     red:
 

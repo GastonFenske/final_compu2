@@ -4,7 +4,6 @@ from service.trader import Trader
 from constants import *
 import json
 import asyncio
-# from app import connector
 from db.repository import Repository
 
 get_routes: dict = {}
@@ -40,23 +39,14 @@ active_market = []
 @route('/api/open-markets', 'GET')
 def get_open_markets():
     global active_market
-    # try:
-    #     connector = Connector(EMAIL, PASSWORD)
-    #     open_markets = OpenMarkets(connector)
-    #     print(open_markets.get_open_markets())
-    # except:
-    #     pass
-    # return {'open_markets': 'some open markets'}
+
     try: 
 
-        # TODO: esto hay que desacploparlo no podemos estar conectandonos cada vez que necesitemos hacer algo
-        # connector = Connector(EMAIL, PASSWORD)
-        # connector = object()
         if connector != None:
             open_markets = OpenMarkets(connector)
-            # open_markets = asyncio.gather(open_markets.get_open_markets())
+
             open_markets = open_markets.get_open_markets()
-            # return every market with true or false if it's active
+
             markets = []
             print('active markets', active_market)
             for market in open_markets:
@@ -65,10 +55,10 @@ def get_open_markets():
                         'market': market,
                         'operating': True
                     }
-                    # markets[market] = True
+
                     markets.append(data)
                 else:
-                    # markets[market] = False
+
                     data = {
                         'market': market,
                         'operating': False
@@ -100,19 +90,19 @@ def trade(body):
 
     body = json.loads(body)
 
-    # MONEY = 10
+
     money = body['money']
     goal = body['market']
-    # GOAL = 'EURUSD-OTC'
+
     size = 60
     maxditc = 1
     expiration_mode = 4
 
-    # print(GOAL, 'este es el mercado que llega')
+
 
     try:
         if connector != None:
-            # trader = Trader(MONEY, GOAL, size, maxditc, expiration_mode)
+
             trader = Trader()
             trader.money = money
             trader.goal = goal
@@ -121,10 +111,11 @@ def trade(body):
             trader.expiration_mode = expiration_mode
             if semaphore:
                 active_market.append(goal)
+
                 print('Empezamos con el trade')
-                # trader.start_trade(connector)
+
                 asyncio.gather(trader.start_trade(connector))
-                # trader.start_trade(connector)
+
                 return {
                     'trade': 'trade started'
                 }
@@ -143,12 +134,6 @@ def trade(body):
         print('Esta entrando aca', e)
         return {'error': e}
 
-# @route('/api/home', 'GET')
-# def get_home():
-#     # open the home.html and return it
-#     with open('home.html', 'rb') as f: # TODO: desacoplar esta funcion para renderizar html
-#         return f.read()
-
 connector = None
 @route('/api/login', 'POST')
 def post_login(payload):
@@ -166,10 +151,7 @@ def post_login(payload):
                 'status': 'error',
                 'error': 'Wrong credentials'
             }
-        return {
-            'status': 'ok',
-            'message': f'Welcome {payload["email"]}'
-        }
+
     except Exception as e:
         return {
             'status': 'error',
@@ -178,21 +160,10 @@ def post_login(payload):
 
 @route('/api/connect', 'POST')
 def connect(body):
-    print(body, 'body en connect')
-    email = json.loads(body)['email']
-    print(email, 'email')
-    # print(body['email'], 'email en connect')
+
     return {
         'connect': json.loads(body)
     }
-    # try:
-    #     connector = Connector(EMAIL, PASSWORD)
-    #     if connector.get_connect():
-    #         return {'connect': True}
-    #     else:
-    #         return {'connect': False}
-    # except Exception as e:
-    #     return {'error': e}
 
 @route('/api/operations', "GET")
 def get_operations():
