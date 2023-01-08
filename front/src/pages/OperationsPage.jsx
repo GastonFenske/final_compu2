@@ -11,7 +11,8 @@ export const OperationsPage = () => {
 
     const getOperations = async () => {
         setLoading(true);
-        const url = 'http://127.0.0.1:1234/api/operations'
+        // const url = 'http://127.0.0.1:1234/api/operations'
+        const url = `${tradinbBotApi}/api/operations`
         const resp = await fetch(url)
         const data = await resp.json();
         setOperations(data.operations);

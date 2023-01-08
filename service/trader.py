@@ -60,6 +60,8 @@ class Trader:
                 operation_data = json.dumps(operation_data)
                 await self.send_to_socket(self.writer, operation_data)
 
+                # TODO: mientras esperamos el result de la operacion podriamos liberar el hilo, para que no se quede esperando y pueda seguir haciendo otras cosas
+                # result, amount = await buyer.verify_operation_result(id)
                 result, amount = buyer.verify_operation_result(id)
 
                 win = 0
@@ -89,7 +91,8 @@ class Trader:
                 operation_data = json.dumps(operation_data)
                 await self.send_to_socket(self.writer, operation_data)
 
-                result, amount = buyer.verify_operation_result(id)
+                # result, amount = await buyer.verify_operation_result(id)
+                result, amount = await buyer.verify_operation_result(id)
 
                 win = 0
                 if result != 'loose':
@@ -118,8 +121,10 @@ class Trader:
                 await self.send_to_socket(self.writer, operation_data)
                 print('Mando la card de la compra')
 
+                # result, amount = await buyer.verify_operation_result(id)
+                # gather o algo asi
                 result, amount = buyer.verify_operation_result(id)
-                print('Calculo el resultado de la compra')
+                print('Calculo el resultado de la compra y paso de largo por await')
 
                 win = 0
                 if result != 'loose':

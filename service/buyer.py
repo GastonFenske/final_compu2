@@ -1,4 +1,4 @@
-import datetime, json
+import datetime, json, asyncio
 
 class Buyer:
 
@@ -41,12 +41,16 @@ class Buyer:
     def verify_operation_buy(self, check) -> bool:
         return True if check else False
 
+    # async def verify_operation_result(self, id) -> tuple:
+    #     """Return the result of the operation and the amount of money earned or lost"""
+    #     result, amount = await self.connector.api.check_win_v4(id)
+    #     return result, amount
+
     def verify_operation_result(self, id) -> tuple:
         """Return the result of the operation and the amount of money earned or lost"""
         result, amount = self.connector.api.check_win_v4(id)
         return result, amount
 
-    
     def package_operation_result(self, signal, id, win, amount, money, expiration_mode, goal) -> str:
         """Return the data to be sent to the socket"""
 

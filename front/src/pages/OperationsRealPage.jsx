@@ -14,7 +14,8 @@ export const OperationsRealPage = () => {
     const [ids, setIds] = useState([])
 
     const getOperations = async () => {
-      const url = 'http://127.0.0.1:1234/api/operations-pending'
+      // const url = 'http://127.0.0.1:1234/api/operations-pending'
+      const url = `${tradinbBotApi}/api/operations-pending`
       const resp = await fetch(url)
       const data = await resp.json();
       setOperations(data.operations);
