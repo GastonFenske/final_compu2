@@ -6,7 +6,6 @@ from api.getCandles import Candles
 import asyncio
 from utils.singleton import SingletonPattern
 from celery.result import AsyncResult
-from db.repository import Repository
 from buyer import Buyer
 
 singleton = SingletonPattern()
@@ -21,7 +20,6 @@ class Trader:
         self.maxditc = maxditc
         self.expiration_mode = expiration_mode
         self.light = True
-        self.repository = Repository()          # Esta linea quiza este al pedo
 
     async def start_trade(self, connector):
 
@@ -41,16 +39,18 @@ class Trader:
 
             signal = data['signal']
 
-            print(signal, 'signal')
+            print('signal', signal)
 
-            if signal == 'call':
-                await buyer.buy_pro('call', self.money, self.goal, 4)
+            operations = {
+                'call': buyer.buy_pro('call', self.money, self.goal, 4),
+                'put': buyer.buy_pro('put', self.money, self.goal, 4),
+                'new_veil': buyer.buy_pro('put', self.money, self.goal, 1)
+            }
 
-            elif signal == 'put':
-                await buyer.buy_pro('put', self.money, self.goal, 4)
-            
-            elif signal == 'new_veil':
-                await buyer.buy_pro('put', self.money, self.goal, 1)
+            try:
+                await operations[signal]
+            except KeyError:
+                pass
 
             await asyncio.sleep(0.5)
 
