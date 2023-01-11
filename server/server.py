@@ -2,6 +2,7 @@ import asyncio, os, json, datetime, random, string
 from server.router import route, get_fun_by_route
 from asyncio import sslproto, transports
 from service.trader import Trader
+from service.buyer import Buyer
 
 class Request:
 
@@ -56,7 +57,11 @@ class Server:
                     trader = Trader()
                     trader.writer = writer
                     print(trader.writer, 'writer que se crea en el server al momento se conecta el socket')
-                except:
+                    # buyer = Buyer()
+                    # buyer.writer = writer
+                    # print('socket', buyer)
+                except Exception as e:
+                    print(e)
                     pass
 
             except Exception as e:

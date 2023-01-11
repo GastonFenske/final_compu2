@@ -1,5 +1,4 @@
 from utils.singleton import SingletonPattern
-from constants import *
 import mysql.connector
 import dotenv, os
 

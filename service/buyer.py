@@ -1,17 +1,16 @@
-import datetime, json, asyncio
+import datetime, json
+from db.repository import Repository
 
 class Buyer:
 
-    def __init__(self, connector):
+    def __init__(self, connector, writer):
         self.connector = connector
+        self.repository = Repository()
+        self.writer = writer
 
-    def buy_operation(self, signal: str, money: float, goal: str, expiration_mode: int = 1) -> tuple:
-        """This will return the socket info to sent to front, for terminal and for cards"""
-
+    async def buy_pro(self, signal: str, money: float, goal: str, expiration_mode: int = 1) -> None:
         check, id = self.connector.api.buy(money, goal, signal, expiration_mode)
         if self.verify_operation_buy(check):
-
-            # This is the data that will be sent to the socket promt (terminal front)
             operation_data_promt = {
                     'date': f'{datetime.datetime.now()}',
                     'market': f'{goal}',
@@ -22,8 +21,8 @@ class Buyer:
                     'state': 'pending',
                     'message': f'El bot encontro una concidencia en el patron y ha abierto una nueva operacion de tipo: {signal}'
                 }
-
-            # operation_data_promt = json.dumps(operation_data)
+            operation_data_promt = json.dumps(operation_data_promt)
+            await self.send_to_socket(self.writer, operation_data_promt)
 
             operation_data = {
                     'date': f'{datetime.datetime.now()}',
@@ -34,11 +33,32 @@ class Buyer:
                     'type': 'operation',  
                     'state': 'pending',
                     'message': f'{signal} option placed'
-                }
+            }
 
-            return operation_data_promt, operation_data, id
+            self.repository.insert('operations', operation_data)
+            operation_data = json.dumps(operation_data)
+            await self.send_to_socket(self.writer, operation_data)
 
-    def buy_pro(self, signal: str, money: float, goal: str, expiration_mode: int = 1): ...
+            result, amount = self.verify_operation_result(id)
+
+            win = 0
+            if result != 'loose':
+                win = 1
+
+            result_data = self.package_operation_result(signal, id, win, amount, money, expiration_mode, goal)
+
+            self.repository.update('operations', result_data, {'id': id})
+
+            result_data = json.dumps(result_data)
+
+            await self.send_to_socket(self.writer, result_data)
+
+            print(result)
+
+
+    async def send_to_socket(self, writer, data):
+        writer.write(str(data).encode())
+        await writer.drain()
 
     def verify_operation_buy(self, check) -> bool:
         return True if check else False

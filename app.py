@@ -1,8 +1,6 @@
 import sys, os, dotenv
 sys.path.append('.')
 sys.path.append('service')
-
-from constants import *
 from server import Server
 
 dotenv.load_dotenv()

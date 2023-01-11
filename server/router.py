@@ -1,7 +1,6 @@
 from api.connector import Connector
 from api.getOpenMarkets import OpenMarkets
 from service.trader import Trader
-from constants import *
 import json
 import asyncio
 from db.repository import Repository
