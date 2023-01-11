@@ -38,6 +38,8 @@ class Buyer:
 
             return operation_data_promt, operation_data, id
 
+    def buy_pro(self, signal: str, money: float, goal: str, expiration_mode: int = 1): ...
+
     def verify_operation_buy(self, check) -> bool:
         return True if check else False
 
