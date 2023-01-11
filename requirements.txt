@@ -1,5 +1,5 @@
-celery
-redis
-python-dotenv
-pandas
-mysql-connector-python
+celery==5.2.7
+redis==4.3.4
+python-dotenv==0.21.0
+pandas==1.5.1
+mysql-connector-python==8.0.31

@@ -1,9 +1,11 @@
-export const getMarkets = async () => {
+import tradingBotApi from "../api/tradingBotApi";
 
+
+export const getMarkets = async () => {
     // console.log('Entro')
   
     // const url = 'http://127.0.0.1:1234/api/open-markets'
-    const url = `${tradinbBotApi}/api/open-markets`
+    const url = `${tradingBotApi}/api/open-markets`
     const resp = await fetch(url)
     const data = await resp.json();
   

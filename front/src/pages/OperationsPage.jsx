@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import tradingBotApi from '../api/tradingBotApi'
 import { LoadingComponent } from '../components/LoadingComponent'
 import { Navbar } from '../components/navbar'
 import { TableComponent } from '../components/TableComponent'
@@ -12,7 +13,7 @@ export const OperationsPage = () => {
     const getOperations = async () => {
         setLoading(true);
         // const url = 'http://127.0.0.1:1234/api/operations'
-        const url = `${tradinbBotApi}/api/operations`
+        const url = `${tradingBotApi}/api/operations`
         const resp = await fetch(url)
         const data = await resp.json();
         setOperations(data.operations);

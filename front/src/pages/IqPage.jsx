@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import tradinbBotApi from '../api/tradinbBotApi';
+import tradingBotApi from '../api/tradingBotApi';
 import { LoadingButtonComponent } from '../components/LoadingButtonComponent';
 import { LoadingComponent } from '../components/LoadingComponent';
 import { Navbar } from '../components/navbar'
@@ -36,7 +36,7 @@ export const IqPage = () => {
         setLoading(true);
         
         // const url = 'http://127.0.0.1:1234/api/login'
-        const url = `${tradinbBotApi}/api/login`
+        const url = `${tradingBotApi}/api/login`
         const resp = await fetch(
             url,
             {
