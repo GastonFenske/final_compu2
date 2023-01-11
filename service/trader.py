@@ -44,7 +44,7 @@ class Trader:
             operations = {
                 'call': buyer.buy_pro('call', self.money, self.goal, 4),
                 'put': buyer.buy_pro('put', self.money, self.goal, 4),
-                'new_veil': buyer.buy_pro('put', self.money, self.goal, 1)
+                'new_veil': buyer.buy_pro('put', self.money, self.goal, 1) # TODO: hay que hacer que no opere cada vez que se abre una nueva vela solo que envie la info al promt
             }
 
             try:
