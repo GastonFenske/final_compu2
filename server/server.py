@@ -62,7 +62,7 @@ class Server:
             # trader.writer = writer
             pass
         else:
-            print('ENTRA A SOCKETS')
+            print('ENTRA A SOCKETS se creara el atributo writer')
             try:
 
                 # message = 'Mercados nuevos, estoy mandando desde el back en python al front en react, mediante sockets, con esto ya manda una operacion completa cuando lo necesite y despues se va a reflejar en el front automaticamente'
@@ -70,7 +70,8 @@ class Server:
                     trader = Trader()
                     trader.writer = writer
                     print(trader.writer, 'writer que se crea en el server al momento se conecta el socket')
-                except:
+                except Exception as e:
+                    print(f'ha habido manso error: {e}')
                     pass
                 # for i in range(10):
                 #     message = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(12))
@@ -78,7 +79,7 @@ class Server:
                 #     writer.write(message.encode())
                 #     await writer.drain()
             except Exception as e:
-                print(e)
+                print(e, 'no se pudo crear el trader.writer')
             return
 
 

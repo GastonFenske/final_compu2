@@ -16,7 +16,7 @@ USE `tradingbot` ;
 CREATE TABLE IF NOT EXISTS `tradingbot`.`operations` (
   `date` VARCHAR(100) NOT NULL,
   `market` VARCHAR(100) NOT NULL,
-  `id` INT NOT NULL,
+  `id` VARCHAR(100) NOT NULL,
   `result` TINYINT(1),
   `ammount_use` DECIMAL NOT NULL,
   `profit` DECIMAL,
