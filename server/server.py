@@ -1,8 +1,6 @@
-import asyncio, os, json, datetime, random, string
+import asyncio, json, datetime
 from server.router import route, get_fun_by_route
-from asyncio import sslproto, transports
 from service.trader import Trader
-from service.buyer import Buyer
 
 class Request:
 
@@ -32,32 +30,29 @@ class Server:
 
     async def echo_handle(self, reader, writer):
 
-        # how each new connection is handled
-        try:
-            addr = writer.get_extra_info('peername')
-            print(f'[NEW] Connection from {addr}')
-        except:
-            pass
+        addr = writer.get_extra_info('peername')
+        print(f'[NEW] Connection from {addr}')
 
         data = await reader.read(10000)
 
         request, body = self.parcear(data)
-        print(request, 'REQUEEEEST')
+
         request = Request(request[0], request[1], request[2], body)
 
         print(request.protocol, 'PROTOCOL')
+        
         if request.protocol == 'HTTP/1.1':
+
             print('ES POR HTTP')
-            pass
+            methods = {
+                'GET': self.get_handle,
+                'POST': self.post_handle
+            }
+            fun_to_ex = methods[request.method]
+            await fun_to_ex(request, writer)
+
         else:
             self.socket_handle(writer)
-
-        # TODO: desacoplar los helpers para los types de request como GET, POST, PUT, DELETE
-        if request.method == 'GET':
-            await self.get_handle(request, writer)
-
-        elif request.method == 'POST':
-            await self.post_handle(request, writer)
 
     async def main(self):
 

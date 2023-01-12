@@ -86,9 +86,7 @@ def trade(body):
     else:
         semaphore = False
 
-
     body = json.loads(body)
-
 
     money = body['money']
     goal = body['market']
@@ -96,8 +94,6 @@ def trade(body):
     size = 60
     maxditc = 1
     expiration_mode = 4
-
-
 
     try:
         if connector != None:
@@ -116,14 +112,14 @@ def trade(body):
                 asyncio.gather(trader.start_trade(connector))
 
                 return {
-                    'trade': 'trade started'
+                    'trade': f'trade started'
                 }
             else:
                 active_market.remove(goal)
                 print('Paramos el trade')
                 asyncio.gather(trader.stop_trade())
                 return {
-                    'trade': 'trade stopped'
+                    'trade': f'trade stopped'
                 }
         else:
             return {
