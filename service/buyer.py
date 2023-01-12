@@ -76,10 +76,6 @@ class Buyer:
     def package_operation_result(self, signal, id, win, amount, money, expiration_mode, goal) -> str:
         """Return the data to be sent to the socket"""
 
-        # esto solo cuando probamos despues hay que quitarlo
-        if signal == 'new_veil':
-            signal = 'put'
-
         result_data = {
             'date': f'{datetime.datetime.now()}',
             'market': f'{goal}',

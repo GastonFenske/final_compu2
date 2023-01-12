@@ -50,90 +50,14 @@ class Server:
             print('ES POR HTTP')
             pass
         else:
-            print('ENTRA A SOCKETS, ES POR SOCKETS')
-            try:
-
-                try:
-                    trader = Trader()
-                    trader.writer = writer
-                    print(trader.writer, 'writer que se crea en el server al momento se conecta el socket')
-                    # buyer = Buyer()
-                    # buyer.writer = writer
-                    # print('socket', buyer)
-                except Exception as e:
-                    print(e)
-                    pass
-
-            except Exception as e:
-                print(e)
-            return
-
+            self.socket_handle(writer)
 
         # TODO: desacoplar los helpers para los types de request como GET, POST, PUT, DELETE
         if request.method == 'GET':
-            print('Entro al GET')
-            try:
-                fun = get_fun_by_route(request.path)
-                data = fun() # lo que devuelve el metodo en este caso devia ser el html
-                print(data, 'ESTO LO IMPREME DESDE EL GET DEL SERVEr')
+            await self.get_handle(request, writer)
 
-
-                try:
-                    body = json.dumps(data).encode()
-                except:
-                    body = data
-                
-                respuesta = '200 OK'
-
-                header = bytearray(
-                    "HTTP/1.1 " + respuesta + "\r\nContent-type:" + 'text/html'
-                    + "\r\nContent-length:" + str(len(body)) + "\r\nAccess-Control-Allow-Origin: *" + "\r\n\r\n", 'utf8'
-                )
-
-                writer.write(header)        #Enviamos la cabecera
-                writer.write(body)          #Enviamos el body
-                await writer.drain()        #Esperamos que todo se haya enviado
-                writer.close()
-            except:
-                body = json.dumps({
-                    'timestamp': str(datetime.datetime.now()),
-                    'status': 404,
-                    'error': 'Not Found',
-                    'path': str(request.path)
-                }).encode()
-                respuesta = '404 Not Found'
-
-                header = bytearray(
-                    "HTTP/1.1 " + respuesta + "\r\nContent-type:" + 'text/html'
-                    + "\r\nContent-length:" + str(len(body)) + "\r\nAccess-Control-Allow-Origin: *" + "\r\n\r\n", 'utf8'
-                )
-
-                writer.write(header)        #Enviamos la cabecera
-                writer.write(body)          #Enviamos el body
-                await writer.drain()        #Esperamos que todo se haya enviado
-                writer.close()
-    
         elif request.method == 'POST':
-            fun = get_fun_by_route(request.path, request.method)
-            # print(request.body, 'body')
-            data = fun(request.body)
-            print('is a post')
-
-            otro = json.loads(body)
-
-            body = json.dumps(data).encode()
-            respuesta = '201 OK'
-
-            # create a header with Access-Control-Allow-Origin: * and allow cors
-            header = bytearray(
-                "HTTP/1.1 " + respuesta + "\r\nContent-type:" + 'text/html'
-                + "\r\nContent-length:" + str(len(body)) + "\r\nAccess-Control-Allow-Origin: *" + "\r\n\r\n", 'utf8'
-            )
-
-            writer.write(header)        #Enviamos la cabecera
-            writer.write(body)          #Enviamos el body
-            await writer.drain()        #Esperamos que todo se haya enviado
-            writer.close()
+            await self.post_handle(request, writer)
 
     async def main(self):
 
@@ -152,3 +76,83 @@ class Server:
     def start(self):
         route()
         asyncio.run(self.main())
+
+    def socket_handle(self, writer) -> None:
+        print('ENTRA A SOCKETS, ES POR SOCKETS')
+        try:
+            trader = Trader()
+            trader.writer = writer
+            print(trader.writer, 'writer que se crea en el server al momento se conecta el socket')
+        except Exception as e:
+            print(e)
+            pass
+
+    async def post_handle(self, request, writer) -> None:
+
+        print('Entro al POST')
+        fun = get_fun_by_route(request.path, request.method)
+        data = fun(request.body)
+        body = json.dumps(data).encode()
+        respuesta = '201 OK'
+
+        header = bytearray(
+            "HTTP/1.1 " + respuesta + "\r\nContent-type:" + 'text/html'
+            + "\r\nContent-length:" + str(len(body)) + "\r\nAccess-Control-Allow-Origin: *" + "\r\n\r\n", 'utf8'
+        )
+
+        writer.write(header)        #Enviamos la cabecera
+        writer.write(body)          #Enviamos el body
+        await writer.drain()        #Esperamos que todo se haya enviado
+        writer.close()
+
+    async def get_handle(self, request, writer) -> None:
+
+        print('Entro al GET')
+        try:
+
+            fun = get_fun_by_route(request.path)
+            data = fun()
+
+            try:
+                body = json.dumps(data).encode()
+            except:
+                body = data
+
+            respuesta = '200 OK'
+
+            header = bytearray(
+                "HTTP/1.1 " + respuesta + "\r\nContent-type:" + 'text/html'
+                + "\r\nContent-length:" + str(len(body)) + "\r\nAccess-Control-Allow-Origin: *" + "\r\n\r\n", 'utf8'
+            )
+
+            writer.write(header)        #Enviamos la cabecera
+            writer.write(body)          #Enviamos el body
+            await writer.drain()        #Esperamos que todo se haya enviado
+            writer.close()
+
+        except Exception as e:
+            print(e)
+            await self.not_found_handle(request, writer)
+
+
+    async def not_found_handle(self, request, writer) -> None:
+
+        body = json.dumps({
+            'timestamp': str(datetime.datetime.now()),
+            'status': 404,
+            'error': 'Not Found',
+            'path': str(request.path)
+        }).encode()
+        respuesta = '404 Not Found'
+
+        header = bytearray(
+            "HTTP/1.1 " + respuesta + "\r\nContent-type:" + 'text/html'
+            + "\r\nContent-length:" + str(len(body)) + "\r\nAccess-Control-Allow-Origin: *" + "\r\n\r\n", 'utf8'
+        )
+
+        writer.write(header)        #Enviamos la cabecera
+        writer.write(body)          #Enviamos el body
+        await writer.drain()        #Esperamos que todo se haya enviado
+        writer.close()
+
+

@@ -16,8 +16,8 @@ const client = new net.Socket();
 
 // try to connect to python server until it is up
 const connectToPythonServer = () => {
-    client.connect(1234, 'python', () => {
-    // client.connect(1234, 'localhost', () => {
+    // client.connect(1234, 'python', () => {
+    client.connect(1234, 'localhost', () => {
         console.log('Connected al back de python, es decir al sv asincronico');
         client.write('Hello, server! Love, Client.');
     });
