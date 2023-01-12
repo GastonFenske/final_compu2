@@ -1,49 +1,26 @@
-# Descargar el repositorio
-Abrir una terminal y ejecutar los siguientes comandos
+# INSTALL
 
-```bash 
+# Descargar el respositorio
+
+Abrir una terminal y ejecutar el siguiente comando
+
+```powershell
 git clone https://github.com/GastonFenske/final_compu2.git
 ```
 
-# INSTALACIÓN (SOLO SISTEMAS UNIX)
+# Instalacion
 
-## Python3
+## ⚠️ Hay que tener Docker en el sistema operativo local
 
-```bash 
-sudo apt install python3
-```
+1. Crear un archivo .env en base al archivo .env-example de este repositorio (recomendamos dejar los valores que trae por defecto, sobre todo porque en el front la conexion al back esta estatica). Solo agregarle una contraseña a la base de datos MySQL en el campo **DB_PASSWORD**
+2. Ejecutar el archivo docker-compose.yaml con el siguiente comando (tenemos que estar situados en el path donde se encuentra este archivo, para comprobar que nos encontramos en el mismo lugar que el archivo podemos ejecutar un **ls** en la terminal): 
 
-## Nodejs
-```bash
-sudo apt install nodejs
-sudo apt install npm
+```powershell
+docker compose up
 ```
 
-## MySQL
-```bash
-sudo apt install mysql-server
-```
-> Nota: Hay que configurar el usuario y la contraseña al instalar MySQL se puede con los siguientes comandos
-```bash
-sudo mysql_secure_installation
-```
-> IMPORTANTE: Crear la base de datos con MySQL que está en la carpeta **db/**
-## Celery
-```bash
-bash worker_celery.sh
-```
+Se comenzara a instalar el sistema completo (puede tardar unos minutos)
 
-## Servidor backend
-```bash 
-bash boot.sh
-```
+Una vez los 6 contenedores esten arriba ya se podra utilizar el sistema
 
-## React
-```bash 
-bash front.sh
-```
-
-## Node
-```bash 
-bash adapter.sh
-```
+Por defecto en la direccion para acceder a la interfaz del sistema es: [http://localhost:5173](http://localhost:5173)
