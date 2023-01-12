@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Navbar } from '../components/navbar'
 // import { getNewInfo } from '../helpers/getNewInfo'
 import io from 'socket.io-client'
+import tradingBotApi from '../api/tradingBotApi'
 
 
 export const OperationsRealPage = () => {
@@ -14,7 +15,8 @@ export const OperationsRealPage = () => {
     const [ids, setIds] = useState([])
 
     const getOperations = async () => {
-      const url = 'http://127.0.0.1:1234/api/operations-pending'
+      // const url = 'http://127.0.0.1:1234/api/operations-pending'
+      const url = `${tradingBotApi}/api/operations-pending`
       const resp = await fetch(url)
       const data = await resp.json();
       setOperations(data.operations);

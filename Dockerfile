@@ -1,29 +1,14 @@
-FROM python:3.9-alpine
+FROM python:3.8-buster
 
-RUN mkdir -p /home/app
+WORKDIR /app
 
-COPY . /home/app
-
-WORKDIR /home/app
-
-# RUN apk update
-# RUN apk add make automake gcc g++ subversion python3-dev
-RUN apk add --update curl gcc g++ libffi-dev openssl-dev build-base linux-headers && \
-    apk add mariadb-dev py3-mysqlclient mysql-client && \
-    rm -rf /var/cache/apk/*
-
-# COPY requirements.txt /home/app
-# ADD requirements.txt ./requirements.txt
-# RUN bash iqapi.sh
-RUN cd /home/app/api/iqoptionapi && \
-    python3 setup.py install
-
-ADD requirements.txt ./requirements.txt
-
-RUN pip install --upgrade pip
-# RUN pip install -r requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+COPY . /app
 
 EXPOSE 1234
 
-CMD ["python", "./app.py"]
+RUN cd /app/api/iqoptionapi && \
+    python3 setup.py install
+
+RUN pip install -r requirements.txt
+
+CMD ["python", "-u", "./app.py"]

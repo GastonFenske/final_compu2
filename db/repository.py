@@ -1,27 +1,35 @@
-import pymysql, json
 from utils.singleton import SingletonPattern
-from models.operation import Operation
-from constants import *
+import mysql.connector
+import dotenv, os
+
+dotenv.load_dotenv()
 
 singleton = SingletonPattern()
+
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
+DB_DATABASE = os.getenv('DB_DATABASE')
 
 @singleton.singleton
 class Repository:
 
     def __init__(self):
 
-        # with open("config.json", "r") as j:
-        #     config = json.load(j)
-
-        self.db = pymysql.connect(
-            # user=config["user"],
-            # passwd=config["password"],
-            # host=config["host"],
-            # database=config["database"]
-            user=DB_USER,
-            passwd=DB_PASSWORD,
-            host=DB_HOST,
-            database=DB_DATABASE
+        self.db = mysql.connector.connect(
+            # user='root',
+            # password='fenske12',
+            # host='localhost',
+            # # host='mysql',
+            # port='3306',
+            # database='tradingbot'
+            user=f'{DB_USER}',
+            password=f'{DB_PASSWORD}',
+            host=f'{DB_HOST}',
+            # host='mysql',
+            port=f'{DB_PORT}',
+            database=f'{DB_DATABASE}'
         )
 
     def insert(self, table: str, data: dict):
@@ -49,8 +57,6 @@ class Repository:
 
     def select(self, table: str, columns: list) -> list:
 
-        # print('Entra al select del repository')
-
         cursor = self.db.cursor()
         columns = ",".join(columns)
         # where = " AND ".join([f"{key}='{value}'" for key, value in where.items()])
@@ -59,12 +65,11 @@ class Repository:
 
         data = cursor.fetchall()
 
-        # print(data, 'DATA DEL REPOSITORY')
+
         operations = []
-        # print(len(data), 'LEN DATA')
+
 
         for i in range (len(data)):
-            # print('Entra al for')
 
             date = data[i][0]
             market = data[i][1]
@@ -79,8 +84,7 @@ class Repository:
             operation_type = data[i][7]
             state = data[i][8]
             message = data[i][9]
-            # type_operation = data[i][10]
-            # operation = Operation(id, date, market, result, ammount_use, profit, duration_in_min)
+
             operation = {
                 'id': id,
                 'date': date,
@@ -92,12 +96,9 @@ class Repository:
                 'type': operation_type,
                 'state': state,
                 'message': message
-                # 'type_operation': type_operation
             }
-            # print(operation, 'OPERATION FROM REPOSITORY')
-            # print(operation, 'OPERATION')
+
             operations.append(operation)
-            # print(operations, 'OPERATIONS')
 
         return operations
 
@@ -114,12 +115,9 @@ class Repository:
 
         data = cursor.fetchall()
 
-        print(data, 'DATA DEL REPOSITORY')
         operations = []
-        # print(len(data), 'LEN DATA')
 
         for i in range (len(data)):
-            # print('Entra al for')
 
             date = data[i][0]
             market = data[i][1]
@@ -134,8 +132,7 @@ class Repository:
             operation_type = data[i][7]
             state = data[i][8]
             message = data[i][9]
-            # type_operation = data[i][10]
-            # operation = Operation(id, date, market, result, ammount_use, profit, duration_in_min)
+
             operation = {
                 'id': id,
                 'date': date,
@@ -147,12 +144,9 @@ class Repository:
                 'type': operation_type,
                 'state': state,
                 'message': message
-                # 'type_operation': type_operation
             }
-            print(operation, 'OPERATION PENDING FROM REPOSITORY')
-            # print(operation, 'OPERATION')
+
             operations.append(operation)
-            # print(operations, 'OPERATIONS')
 
         return operations
 

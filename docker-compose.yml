@@ -1,19 +1,43 @@
 version: "1.1"
 
 services:
-    tradingbot:
+    python:
         build: .
         ports:
             - "1234:1234"
-    #     links:
-    #         - tradingbot_db
+        depends_on:
+            - mysql
+            - redis
 
-    # tradingbot_db:
-    #     image: mysql:8
-    #     restart: always
-    #     ports: 
-    #         - "3306:3306"
-    #     environment: 
-    #         - MYSQL_PASSWORD=fenske12
-    #         - MYSQL_DATABASE=tradingbot
-    #         - MYSQL_ROOT_PASSWORD=fenske12
+    mysql:
+        build: ./db/
+        restart: always
+        ports:
+            - "3306:3306"
+        environment:
+            - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+            - MYSQL_DATABASE=tradingbot
+
+    redis:
+        image: "redis:alpine"
+        ports:
+            - "6379:6379"
+
+    celery:
+        build: .
+        command: sh -c "cd /app/service && celery -A celery_app worker --loglevel INFO"
+        depends_on:
+            - redis
+            - python
+
+    node:
+        build: ./utils/
+        ports: 
+            - "8000:8000"
+
+    front:
+        build: ./front/
+        ports:
+            - "5173:5173"
+        container_name: react_front
+

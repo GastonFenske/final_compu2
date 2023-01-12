@@ -1,23 +1,12 @@
-import sys
+import sys, os, dotenv
 sys.path.append('.')
 sys.path.append('service')
-
-from api.connector import Connector
-from api.getOpenMarkets import OpenMarkets
-from service.trader import Trader
-from constants import *
 from server import Server
 
+dotenv.load_dotenv()
 
-server = Server(HOST, PORT)
+SERVER_HOST = os.getenv('SERVER_HOST')
+SERVER_PORT = os.getenv('SERVER_PORT')
+
+server = Server(SERVER_HOST, SERVER_PORT)
 server.start()
-
-
-
-
-
-
-
-
-
-

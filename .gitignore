@@ -8,3 +8,10 @@ share
 /env
 /constants.py
 /utils/node_modules
+/service/candles.csv
+dump.rdb
+adapter.sh
+boot.sh
+front.sh
+start_redis.sh
+worker_celery.sh
