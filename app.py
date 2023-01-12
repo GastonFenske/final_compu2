@@ -10,13 +10,3 @@ SERVER_PORT = os.getenv('SERVER_PORT')
 
 server = Server(SERVER_HOST, SERVER_PORT)
 server.start()
-
-
-
-
-
-
-
-
-
-
