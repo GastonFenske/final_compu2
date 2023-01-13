@@ -8,6 +8,20 @@ class Buyer:
         self.repository = Repository()
         self.writer = writer
 
+    async def sent_to_promt(self, signal, goal):
+        operation_data_promt = {
+            'date': f'{datetime.datetime.now()}',
+            'market': f'{goal}',
+            'id': '0',
+            'ammount_use': '0',
+            'duration_in_min': '0',
+            'type': f'{signal}',
+            'state': 'pending',
+            'message': f'Se ha abierto una nueva vela y el bot no ha encontrado una concidencia en el patron'
+        }
+        operation_data_promt = json.dumps(operation_data_promt)
+        await self.send_to_socket(self.writer, operation_data_promt)
+
     async def buy_pro(self, signal: str, money: float, goal: str, expiration_mode: int = 1) -> None:
         check, id = self.connector.api.buy(money, goal, signal, expiration_mode)
         if self.verify_operation_buy(check):
