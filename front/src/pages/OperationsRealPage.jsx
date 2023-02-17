@@ -8,7 +8,10 @@ import tradingBotApi from '../api/tradingBotApi'
 export const OperationsRealPage = () => {
 
 
-    const [msj, setMsj] = useState('nada')
+    const [msj, setMsj] = useState({
+        type: '',
+        message: 'Ponele que sale algo asi',
+    })
     const [messages, setMessages] = useState([])
 
     const [operations, setOperations] = useState([])
@@ -112,7 +115,8 @@ export const OperationsRealPage = () => {
               <div className="alert alert-dark my-4 d-flex align-items-center" role="alert">
                   <i className="fas fa-terminal me-2 text-iq log-effect"></i>
                   <p className=''>
-                    [STATUS] <span className='text-warning'>{msj}</span>
+                    [STATUS] <span className='text-warning'>{msj.message}</span><br/>
+                    [DATE] <span className='text-warning'>{msj.date}</span>
                   </p>
               </div>
                 {/* Lista completa: {messages} */}

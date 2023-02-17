@@ -41,6 +41,7 @@ class Trader:
 
             print('signal', signal)
 
+            
             operations = {
                 'call': buyer.buy_pro('call', self.money, self.goal, 4),
                 'put': buyer.buy_pro('put', self.money, self.goal, 4),
@@ -51,7 +52,7 @@ class Trader:
                 await operations[signal]
             except KeyError:
                 pass
-
+        
             await asyncio.sleep(0.5)
 
     async def stop_trade(self):
