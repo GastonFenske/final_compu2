@@ -37,16 +37,19 @@ class Trader:
 
             data = AsyncResult(data.id).get()
 
+
             signal = data['signal']
 
             print('signal', signal)
 
-            
-            operations = {
-                'call': buyer.buy_pro('call', self.money, self.goal, 4),
-                'put': buyer.buy_pro('put', self.money, self.goal, 4),
-                'new_veil': buyer.sent_to_promt('new_veil', self.goal) # TODO: hay que hacer que no opere cada vez que se abre una nueva vela solo que envie la info al promt
-            }
+            try:
+                operations = {
+                    'call': buyer.buy_pro('call', self.money, self.goal, 4),
+                    'put': buyer.buy_pro('put', self.money, self.goal, 4),
+                    'new_veil': buyer.sent_to_promt('new_veil', self.goal, data) # TODO: hay que hacer que no opere cada vez que se abre una nueva vela solo que envie la info al promt
+                }
+            except Exception as e:
+                pass
 
             try:
                 await operations[signal]

@@ -93,8 +93,18 @@ class SuperPatronStrategy(TradeStrategy):
                 'close': close,
                 'signal': '',
                 'message': '',
-                'id': ''
+                'id': '',
+                'upper_band': upper_band,
+                'lower_band': lower_band,
+                'K': K,
+                'D': D,
+                'CCI': CCI,
             }
+
+            if ema_growing:
+                data['ema_growing'] = 'True'
+            else:
+                data['ema_growing'] = 'False'
 
             if close > upper_band:
                 print('La vela esta por arriba del upper band')
@@ -125,8 +135,9 @@ class SuperPatronStrategy(TradeStrategy):
             else:
                 print('Entra al new veil')
                 data['signal'] = 'new_veil'
-                data['message'] = 'No perforo la banda superior ni inferior. El bot se mantiene a la espera',
+                data['message'] = 'No perforo la banda superior ni inferior. El bot se mantiene a la espera'
                 data['id'] = str(current_candle)
+
                 return data
         
         close = df['Close'].iloc[-1]
@@ -142,7 +153,13 @@ class SuperPatronStrategy(TradeStrategy):
             'close': '',
             'signal': 'hold',
             'message': 'Aun no se dan los parametros establecidos',
-            'id': ''
+            'id': '',
+            'upper_band': '',
+            'lower_band': '',
+            'K': '',
+            'D': '',
+            'CCI': '',
+            'ema_growing': ''
         }
 
         # aca hasta aca voy

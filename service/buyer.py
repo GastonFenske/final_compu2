@@ -8,7 +8,8 @@ class Buyer:
         self.repository = Repository()
         self.writer = writer
 
-    async def sent_to_promt(self, signal, goal):
+    async def sent_to_promt(self, signal, goal, data):
+
         operation_data_promt = {
             'date': f'{datetime.datetime.now()}',
             'market': f'{goal}',
@@ -17,7 +18,14 @@ class Buyer:
             'duration_in_min': '0',
             'type': f'{signal}',
             'state': 'pending',
-            'message': f'Se ha abierto una nueva vela y el bot no ha encontrado una concidencia en el patron'
+            'message': f'{data["message"]}',
+            'close': f'{data["close"]}',
+            'upper_band': f'{data["upper_band"]}',
+            'lower_band': f'{data["lower_band"]}',
+            'K': f'{data["K"]}',
+            'D': f'{data["D"]}',
+            'CCI': f'{data["CCI"]}',
+            'ema_growing': f'{data["ema_growing"]}'
         }
         operation_data_promt = json.dumps(operation_data_promt)
         await self.send_to_socket(self.writer, operation_data_promt)
@@ -25,6 +33,9 @@ class Buyer:
     async def buy_pro(self, signal: str, money: float, goal: str, expiration_mode: int = 1) -> None:
         check, id = self.connector.api.buy(money, goal, signal, expiration_mode)
         if self.verify_operation_buy(check):
+
+            # TODO: aca se puede usar el self.sent_to_promt para enviar la info al promt y no repetir todo esto de abajo
+
             operation_data_promt = {
                     'date': f'{datetime.datetime.now()}',
                     'market': f'{goal}',
@@ -100,7 +111,12 @@ class Buyer:
             'duration_in_min': expiration_mode,
             'type': f'{signal}',
             'state': 'finished',
-            'message': 'No benefits'
+            # 'message': 'No benefits'
         }
+
+        if win == 1:
+            result_data['message'] = 'Operacion ganada'
+        else:   
+            result_data['message'] = 'Operacion perdida'
 
         return result_data
