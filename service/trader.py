@@ -37,21 +37,25 @@ class Trader:
 
             data = AsyncResult(data.id).get()
 
+
             signal = data['signal']
 
             print('signal', signal)
 
-            operations = {
-                'call': buyer.buy_pro('call', self.money, self.goal, 4),
-                'put': buyer.buy_pro('put', self.money, self.goal, 4),
-                'new_veil': buyer.buy_pro('put', self.money, self.goal, 1) # TODO: hay que hacer que no opere cada vez que se abre una nueva vela solo que envie la info al promt
-            }
+            try:
+                operations = {
+                    'call': buyer.buy_pro('call', self.money, self.goal, 4),
+                    'put': buyer.buy_pro('put', self.money, self.goal, 4),
+                    'new_veil': buyer.sent_to_promt('new_veil', self.goal, data) # TODO: hay que hacer que no opere cada vez que se abre una nueva vela solo que envie la info al promt
+                }
+            except Exception as e:
+                pass
 
             try:
                 await operations[signal]
             except KeyError:
                 pass
-
+        
             await asyncio.sleep(0.5)
 
     async def stop_trade(self):

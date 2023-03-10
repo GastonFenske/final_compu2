@@ -8,7 +8,18 @@ import tradingBotApi from '../api/tradingBotApi'
 export const OperationsRealPage = () => {
 
 
-    const [msj, setMsj] = useState('nada')
+    const [msj, setMsj] = useState({
+        type: '',
+        message: '',
+        date: '',
+        close: '',
+        upper_band: '',
+        lower_band: '',
+        K: '',
+        D: '',
+        CCI: '',
+        ema_growing: '',
+    })
     const [messages, setMessages] = useState([])
 
     const [operations, setOperations] = useState([])
@@ -41,10 +52,10 @@ export const OperationsRealPage = () => {
 
       if (data.type === 'new_veil') {
 
-        const message = `Fecha: ${data.date} | Mensaje: ${data.message}`
+        // const message = `Fecha: ${data.date} | Mensaje: ${data.message}`
 
-        setMessages([...messages, message])
-        setMsj(message)
+        setMessages([...messages, data])
+        setMsj(data)
 
       } else {
 
@@ -112,7 +123,15 @@ export const OperationsRealPage = () => {
               <div className="alert alert-dark my-4 d-flex align-items-center" role="alert">
                   <i className="fas fa-terminal me-2 text-iq log-effect"></i>
                   <p className=''>
-                    [STATUS] <span className='text-warning'>{msj}</span>
+                    [MESSAGE] <span className='text-warning'>{msj.message}</span><br/>
+                    [DATE] <span className='text-warning'>{msj.date}</span><br/>
+                    [CLOSE] <span className='text-warning'>{msj.close}</span><br/>
+                    [UPPER_BAND] <span className='text-warning'>{msj.upper_band}</span><br/>
+                    [LOWER_BAND] <span className='text-warning'>{msj.lower_band}</span><br/>
+                    [K] <span className='text-warning'>{msj.K}</span><br/>
+                    [D] <span className='text-warning'>{msj.D}</span><br/>
+                    [CCI] <span className='text-warning'>{msj.CCI}</span><br/>
+                    [EMA_GROWING] <span className='text-warning'>{msj.ema_growing}</span><br/>
                   </p>
               </div>
                 {/* Lista completa: {messages} */}
